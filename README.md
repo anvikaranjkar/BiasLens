@@ -43,7 +43,7 @@
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/YOUR_USERNAME/genderlens.git
+git clone https://github.com/Anvi-k101/genderlens.git
 cd genderlens
 
 # 2. Serve it locally (required for API calls — see why below)
