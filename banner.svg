@@ -1,0 +1,29 @@
+<svg width="1200" height="300" viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b83820" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#b83820" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="300" fill="#141210"/>
+  <ellipse cx="600" cy="150" rx="320" ry="180" fill="url(#glow)"/>
+  <line x1="0" y1="60" x2="1200" y2="60" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="0" y1="120" x2="1200" y2="120" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="0" y1="180" x2="1200" y2="180" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="0" y1="240" x2="1200" y2="240" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="240" y1="0" x2="240" y2="300" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="480" y1="0" x2="480" y2="300" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="720" y1="0" x2="720" y2="300" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="960" y1="0" x2="960" y2="300" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <text x="96" y="128" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#b83820" opacity="0.9">9×</text>
+  <text x="96" y="152" font-family="system-ui, sans-serif" font-size="11" fill="#ffffff" opacity="0.35" letter-spacing="1">"HE" VS "SHE" IN NEWS MEDIA</text>
+  <text x="1104" y="128" font-family="Georgia, serif" font-size="52" font-weight="bold" fill="#b83820" opacity="0.9" text-anchor="middle">83%</text>
+  <text x="1104" y="152" font-family="system-ui, sans-serif" font-size="11" fill="#ffffff" opacity="0.35" letter-spacing="1" text-anchor="middle">WIKI BIOS ARE MALE</text>
+  <circle cx="600" cy="105" r="32" fill="#b83820"/>
+  <circle cx="600" cy="105" r="20" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+  <line x1="600" y1="85" x2="600" y2="125" stroke="#ffffff" stroke-width="2.5"/>
+  <text x="600" y="178" font-family="Georgia, serif" font-size="54" font-weight="bold" fill="#ffffff" text-anchor="middle" letter-spacing="-1">GenderLens</text>
+  <text x="600" y="212" font-family="system-ui, sans-serif" font-size="14" fill="#ffffff" opacity="0.45" text-anchor="middle" letter-spacing="3">AI-POWERED GENDER BIAS DETECTION</text>
+  <rect x="548" y="230" width="104" height="2" rx="1" fill="#b83820" opacity="0.8"/>
+  <text x="600" y="262" font-family="system-ui, sans-serif" font-size="11" fill="#ffffff" opacity="0.22" text-anchor="middle" letter-spacing="2">POWERED BY GOOGLE GEMINI</text>
+</svg>
