@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GenderLens</title>
+<title>GenderLens — Gender Bias Detector</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -18,12 +18,12 @@
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh}
 
-/* LOCAL SERVER BANNER */
+/* BANNER */
 .local-banner{display:none;background:#1e3a5f;color:#fff;padding:12px 2rem;font-size:13px;line-height:1.6;text-align:center}
-.local-banner.show{display:block}
 .local-banner code{background:rgba(255,255,255,.15);padding:2px 8px;border-radius:4px;font-family:monospace;font-size:12px}
 .local-banner a{color:#93c5fd}
 
+/* HEADER */
 header{background:var(--ink);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;position:sticky;top:0;z-index:100}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-dot{width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -36,9 +36,10 @@ header{background:var(--ink);height:60px;display:flex;align-items:center;justify
 .status-pill.checking{background:rgba(255,193,7,.2);color:#fcd34d;border:1px solid rgba(252,211,77,.2)}
 .status-pill.fail{background:rgba(184,56,32,.25);color:#fca5a5;border:1px solid rgba(252,165,165,.2)}
 .status-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.status-dot.pulse{animation:blink 2s ease infinite}
+.pulse{animation:blink 2s ease infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
+/* TICKER */
 .ticker{background:var(--red);overflow:hidden;height:34px;position:relative}
 .ticker::before,.ticker::after{content:'';position:absolute;top:0;width:60px;height:100%;z-index:2;pointer-events:none}
 .ticker::before{left:0;background:linear-gradient(to right,var(--red),transparent)}
@@ -50,6 +51,7 @@ header{background:var(--ink);height:60px;display:flex;align-items:center;justify
 .tick strong{font-weight:600}
 .tick-dot{width:4px;height:4px;background:rgba(255,255,255,.4);border-radius:50%}
 
+/* HERO */
 .hero{padding:4.5rem 2.5rem 3.5rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(184,56,32,.06),transparent 65%);pointer-events:none}
 .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--red);background:rgba(184,56,32,.08);border:1px solid rgba(184,56,32,.2);padding:4px 14px;border-radius:20px;margin-bottom:1.75rem}
@@ -57,6 +59,7 @@ header{background:var(--ink);height:60px;display:flex;align-items:center;justify
 .hero h1 em{font-style:italic;font-weight:300;color:var(--red)}
 .hero p{font-size:16px;color:var(--ink2);max-width:460px;margin:0 auto 2.75rem;line-height:1.65}
 
+/* INPUT CARD */
 .wrap{max-width:740px;margin:0 auto;position:relative;z-index:1}
 .card{background:var(--w);border:1px solid var(--border2);border-radius:14px;box-shadow:0 4px 32px rgba(20,18,16,.10);overflow:hidden}
 .tabs{display:flex;border-bottom:1px solid var(--border);background:var(--paper3)}
@@ -80,25 +83,27 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .chip{font-size:12px;padding:4px 12px;background:var(--w);border:1px solid var(--border2);border-radius:20px;color:var(--ink2);cursor:pointer;transition:all .15s}
 .chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
+/* HOW IT WORKS */
 .hiw{background:var(--paper3);border-bottom:1px solid var(--border);padding:3rem 2.5rem}
 .hiw-inner{max-width:900px;margin:0 auto}
 .sec-hd{text-align:center;margin-bottom:1.75rem}
 .sec-hd h2{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink);margin-bottom:.35rem}
 .sec-hd p{font-size:14px;color:var(--ink2)}
 .hiw-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-@media(max-width:640px){.hiw-grid{grid-template-columns:repeat(2,1fr)}}
 .hw{background:var(--w);border:1px solid var(--border);border-radius:10px;padding:1.25rem;box-shadow:var(--sh)}
 .hw-n{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--paper2);line-height:1;margin-bottom:.5rem}
 .hw-i{font-size:20px;margin-bottom:.4rem}
 .hw-t{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.25rem}
 .hw-d{font-size:12px;color:var(--ink3);line-height:1.55}
 
+/* ERROR */
 .err{display:none;max-width:740px;margin:1rem auto;background:#fff5f5;border:1px solid #fecaca;border-left:4px solid var(--red);border-radius:8px;padding:13px 18px}
 .err.show{display:block}
 .err-t{font-weight:600;color:#7a1e10;font-size:14px;margin-bottom:3px}
 .err-m{font-size:14px;color:#7a1e10}
 .err-h{font-size:12px;color:#a03020;margin-top:5px}
 
+/* LOADING */
 .loading{display:none;text-align:center;padding:5rem 2rem}
 .loading.show{display:block}
 .spin{width:38px;height:38px;border:3px solid var(--paper2);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1.25rem}
@@ -106,30 +111,31 @@ textarea::placeholder{color:var(--ink3);font-style:italic}
 .l-t{font-family:var(--serif);font-size:20px;color:var(--ink);margin-bottom:5px}
 .l-s{font-size:13px;color:var(--ink3)}
 
+/* MAIN / RESULTS */
 main{max-width:900px;margin:0 auto;padding:3rem 2rem 8rem}
-#res{display:none;animation:up .4s ease}
-#res.show{display:block}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+#res{display:none}
 
 .r-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
 .r-h{font-family:var(--serif);font-size:26px;font-weight:600}
 .r-m{font-size:12px;color:var(--ink3);margin-top:3px;font-family:monospace}
+.url-bar{display:none;margin-top:5px;font-size:12px;color:var(--ink3);align-items:center;gap:6px;flex-wrap:wrap}
+.url-bar a{font-family:monospace;font-size:11px;color:var(--blu);word-break:break-all;text-decoration:none;border-bottom:1px solid currentColor}
+.url-bar a:hover{color:#0e3f70}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap}
 .btn-sm{background:transparent;color:var(--ink2);border:1px solid var(--border2);border-radius:8px;padding:8px 16px;font-family:var(--sans);font-size:13px;cursor:pointer;transition:all .15s}
 .btn-sm:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-pdf{background:var(--red);color:#fff;border:1px solid var(--red);border-radius:8px;padding:8px 16px;font-family:var(--sans);font-size:13px;cursor:pointer;transition:opacity .15s}
+.btn-pdf:hover{opacity:.88}
 
+/* SCORE */
 .sg{display:grid;grid-template-columns:200px 1fr;gap:1.25rem;margin-bottom:1.25rem}
-@media(max-width:560px){.sg{grid-template-columns:1fr}}
 .sc{background:var(--w);border:1px solid var(--border);border-radius:12px;padding:1.75rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:var(--sh)}
 .sc-n{font-family:var(--serif);font-size:68px;font-weight:600;line-height:1;margin-bottom:2px}
 .sc-d{font-size:12px;color:var(--ink3);margin-bottom:12px}
 .tier{display:inline-block;padding:5px 16px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase}
-.tl{background:#dcfce7;color:#15803d}
-.tm{background:#fef3c7;color:#b45309}
-.th2{background:#ffedd5;color:#c2410c}
-.ts{background:#fee2e2;color:#b91c1c}
+.tl{background:#dcfce7;color:#15803d}.tm{background:#fef3c7;color:#b45309}
+.th2{background:#ffedd5;color:#c2410c}.ts{background:#fee2e2;color:#b91c1c}
 .cl{color:#15803d}.cm{color:#b45309}.ch{color:#c2410c}.cs{color:#b91c1c}
-
 .smc{background:var(--w);border:1px solid var(--border);border-radius:12px;padding:1.5rem;box-shadow:var(--sh)}
 .dom-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .dtag{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;background:var(--paper2);color:var(--ink2);padding:3px 12px;border-radius:20px}
@@ -138,9 +144,7 @@ main{max-width:900px;margin:0 auto;padding:3rem 2rem 8rem}
 .pbl{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);margin-bottom:4px}
 .pbl span:first-child{font-weight:500;color:var(--ink2)}
 .pb{height:8px;background:var(--paper2);border-radius:4px;overflow:hidden;display:flex}
-.pbh{height:100%;background:#1a5fa8}
-.pbs{height:100%;background:#b83820}
-.pbt{height:100%;background:#5b3fa6}
+.pbh{height:100%;background:#1a5fa8}.pbs{height:100%;background:#b83820}.pbt{height:100%;background:#5b3fa6}
 .pbleg{display:flex;gap:14px;margin-top:6px;flex-wrap:wrap}
 .pl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2)}
 .pld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -148,21 +152,24 @@ main{max-width:900px;margin:0 auto;padding:3rem 2rem 8rem}
 .txn{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);line-height:1}
 .txl{font-size:11px;color:var(--ink3);margin-top:2px}
 
+/* TILES */
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
-@media(max-width:560px){.tiles{grid-template-columns:repeat(2,1fr)}}
 .tile{background:var(--w);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--sh)}
 .tile-i{font-size:18px;margin-bottom:5px}
 .tile-l{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
 .tile-n{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--ink);line-height:1}
 
+/* SECTION LABEL */
 .slbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.7rem;display:flex;align-items:center;gap:10px}
 .slbl::after{content:'';flex:1;height:1px;background:var(--border)}
 
+/* INSIGHT */
 .ins{background:var(--ink);border-radius:12px;padding:1.25rem 1.75rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:1.25rem;flex-wrap:wrap}
 .ii{font-size:26px;flex-shrink:0;margin-top:2px}
 .it{font-family:var(--serif);font-size:15px;font-weight:600;color:#fff;margin-bottom:3px}
 .ib{font-size:12px;color:rgba(255,255,255,.55);line-height:1.58}
 
+/* HIGHLIGHTS */
 .lc{display:flex;align-items:center;justify-content:space-between;margin-bottom:.65rem;flex-wrap:wrap;gap:8px}
 .lr{display:flex;gap:12px;flex-wrap:wrap}
 .li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink2)}
@@ -173,6 +180,7 @@ mark.mg{background:rgba(212,160,23,.14);border-bottom:2px solid rgba(212,160,23,
 mark.ma{background:rgba(91,63,166,.10);border-bottom:2px solid rgba(91,63,166,.48);color:inherit;border-radius:2px;cursor:help;padding:1px 0}
 mark.md{background:rgba(30,107,68,.10);border-bottom:2px solid rgba(30,107,68,.48);color:inherit;border-radius:2px;cursor:help;padding:1px 0}
 
+/* FLAGS */
 .flags{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
 .flag{background:var(--w);border:1px solid var(--border);border-radius:10px;padding:13px 15px;display:grid;grid-template-columns:3px 1fr;gap:13px;box-shadow:var(--sh)}
 .fst{border-radius:2px}
@@ -186,13 +194,15 @@ mark.md{background:rgba(30,107,68,.10);border-bottom:2px solid rgba(30,107,68,.4
 .fpd{background:rgba(30,107,68,.1);color:#1e6b44}
 .fex{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:5px}
 .fsg{font-size:12px;color:var(--grn)}
-.fsg::before{content:'→ '}
+.fsg::before{content:'\2192 '}
 
+/* SUGGESTIONS */
 .sugs{background:var(--w);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:2rem;box-shadow:var(--sh)}
 .sugr{display:flex;align-items:baseline;gap:12px;padding:13px 18px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink2);line-height:1.55}
 .sugr:last-child{border-bottom:none}
 .sugn{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--paper2);flex-shrink:0;line-height:1}
 
+/* HISTORY */
 .hist{background:var(--paper3);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;display:none}
 .hist.show{display:block}
 .hh{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
@@ -207,40 +217,95 @@ mark.md{background:rgba(30,107,68,.10);border-bottom:2px solid rgba(30,107,68,.4
 .hisr{font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
 .him{font-size:11px;color:var(--ink3)}
 
+/* ABOUT */
 .about{background:var(--paper2);border-top:1px solid var(--border);padding:4rem 2.5rem}
 .ai{max-width:900px;margin:0 auto}
 .ahd{margin-bottom:2.25rem}
 .ahd p{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
 .ahd h2{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--ink);max-width:460px;line-height:1.25}
 .agr{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2.5rem}
-@media(max-width:600px){.agr{grid-template-columns:1fr}}
 .asc{background:var(--w);border:1px solid var(--border);border-radius:10px;padding:1.4rem;box-shadow:var(--sh)}
 .asn{font-family:var(--serif);font-size:38px;font-weight:600;color:var(--red);line-height:1;margin-bottom:6px}
 .asd{font-size:13px;color:var(--ink2);line-height:1.55}
 .ass{font-size:11px;color:var(--ink3);margin-top:6px}
 .tgr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:540px){.tgr{grid-template-columns:1fr}}
 .tc{background:var(--w);border:1px solid var(--border);border-radius:10px;padding:1.25rem;box-shadow:var(--sh)}
 .tbar{height:3px;border-radius:2px;width:36px;margin-bottom:.75rem}
 .tn{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.3rem}
 .td{font-size:12px;color:var(--ink2);line-height:1.55}
 .teg{font-size:11px;color:var(--ink3);margin-top:.5rem;font-style:italic}
 
+/* FOOTER */
 footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:1.5rem;font-size:12px;line-height:1.8}
 footer a{color:rgba(255,255,255,.5);text-decoration:none}
 footer a:hover{color:rgba(255,255,255,.85)}
+
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--paper2);border-radius:3px}
-@media(max-width:500px){header,footer,.hero,.about,.hiw{padding-left:1.25rem;padding-right:1.25rem}main{padding:2rem 1.25rem 6rem}}
+
+@media(max-width:640px){
+  .hiw-grid{grid-template-columns:repeat(2,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .sg{grid-template-columns:1fr}
+  .agr{grid-template-columns:1fr}
+  .tgr{grid-template-columns:1fr}
+  header,.hero,.about,.hiw{padding-left:1.25rem;padding-right:1.25rem}
+  main{padding:2rem 1.25rem 6rem}
+}
+
+/* ── PRINT / PDF STYLES ── */
+@media print {
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  .local-banner,.ticker,.hiw,.hist,.chips,
+  .btn-row,.nav,.status-pill,.hiw,.about,
+  .eyebrow,.hero p,.wrap,.input-wrap{display:none!important}
+  body{background:#fff!important;color:#141210!important;font-size:13px}
+  header{position:relative!important;height:auto;padding:14px 2rem;background:#141210!important}
+  .logo-text{color:#fff!important}
+  .hero{padding:1.5rem 2rem;border-bottom:2px solid #141210;background:#fff!important}
+  .hero h1{font-size:26px;margin-bottom:.4rem}
+  main{padding:1rem 2rem 2rem;max-width:100%}
+  #res{display:block!important}
+  .r-top{margin-bottom:1rem}
+  .r-h{font-size:20px}
+  .url-bar{display:flex!important}
+  .sg{grid-template-columns:160px 1fr;gap:1rem;margin-bottom:1rem}
+  .sc,.smc{border:1.5px solid #141210!important;background:#fff!important;padding:1rem}
+  .sc-n{font-size:52px}
+  .tiles{grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:1rem}
+  .tile{border:1px solid #ccc!important;background:#fff!important;padding:.75rem;break-inside:avoid}
+  .ins{background:#141210!important;padding:1rem 1.25rem;margin-bottom:1rem;break-inside:avoid}
+  .hlbox{max-height:none!important;overflow:visible!important;border:1px solid #ccc!important;background:#fff!important;margin-bottom:1rem;font-size:12px;line-height:1.7;break-inside:avoid}
+  mark.mp{background:rgba(26,95,168,.15)!important;border-bottom:2px solid #1a5fa8!important}
+  mark.mg{background:rgba(212,160,23,.2)!important;border-bottom:2px solid #d4a017!important}
+  mark.ma{background:rgba(91,63,166,.15)!important;border-bottom:2px solid #5b3fa6!important}
+  mark.md{background:rgba(30,107,68,.15)!important;border-bottom:2px solid #1e6b44!important}
+  .flags{gap:6px;margin-bottom:1rem}
+  .flag{border:1px solid #ccc!important;background:#fff!important;padding:10px 12px;break-inside:avoid}
+  .fp{background:#1a5fa8!important}.fg{background:#d4a017!important}
+  .fa{background:#5b3fa6!important}.fd{background:#1e6b44!important}
+  .sugs{border:1px solid #ccc!important;background:#fff!important;margin-bottom:1rem}
+  .sugr{padding:10px 14px;border-bottom:1px solid #eee!important}
+  .tl{background:#dcfce7!important;color:#15803d!important}
+  .tm{background:#fef3c7!important;color:#b45309!important}
+  .th2{background:#ffedd5!important;color:#c2410c!important}
+  .ts{background:#fee2e2!important;color:#b91c1c!important}
+  .pbh{background:#1a5fa8!important}.pbs{background:#b83820!important}.pbt{background:#5b3fa6!important}
+  .pb{border:1px solid #ddd!important}
+  footer{background:#141210!important;color:rgba(255,255,255,.8)!important;padding:1rem;margin-top:1rem}
+  footer a{color:rgba(255,255,255,.7)!important}
+  h1,h2,.r-h{break-after:avoid}
+  @page{margin:15mm 12mm;size:A4}
+}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
-<!-- LOCAL SERVER BANNER - shown automatically on file:// -->
 <div class="local-banner" id="local-banner">
-  <strong>Running from a local file</strong> — API calls are being routed via a CORS proxy automatically.
-  For best results, run a local server instead: open Terminal and run
-  <code>python3 -m http.server 8080</code> in this file's folder,
+  <strong>Running from a local file</strong> — API calls are routed via a CORS proxy.
+  For best results: open Terminal, run <code>python3 -m http.server 8080</code> in this file's folder,
   then open <a href="http://localhost:8080/GenderLens.html">http://localhost:8080/GenderLens.html</a>
 </div>
 
@@ -274,8 +339,8 @@ footer a:hover{color:rgba(255,255,255,.85)}
   <div class="wrap">
     <div class="card" id="input-card">
       <div class="tabs">
-        <button class="tab active" onclick="switchTab('text')">Paste text</button>
-        <button class="tab" onclick="switchTab('url')">Enter URL</button>
+        <button class="tab active" id="tab-text" onclick="switchTab('text')">Paste text</button>
+        <button class="tab" id="tab-url" onclick="switchTab('url')">Enter URL</button>
       </div>
       <div class="panel active" id="panel-text">
         <textarea id="text-input" placeholder="Paste an article, job listing, product page, Wikipedia article, or any copy here…" oninput="updateCount()"></textarea>
@@ -288,13 +353,13 @@ footer a:hover{color:rgba(255,255,255,.85)}
       </div>
       <div class="foot">
         <span class="cc" id="cc">0 chars</span>
-        <button class="btn-go" onclick="runAnalysis()">
+        <button class="btn-go" id="analyse-btn" onclick="runAnalysis()">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           Analyse for bias
         </button>
       </div>
     </div>
-    <div class="chips">
+    <div class="chips" id="chips-row">
       <span class="chips-lbl">Try an example:</span>
       <button class="chip" onclick="loadExample('tech')">Tech article</button>
       <button class="chip" onclick="loadExample('ship')">Ship anthropomorphism</button>
@@ -307,15 +372,12 @@ footer a:hover{color:rgba(255,255,255,.85)}
 
 <div class="hiw">
   <div class="hiw-inner">
-    <div class="sec-hd">
-      <h2>How it works</h2>
-      <p>Four layers of AI analysis, each targeting a different form of gender bias</p>
-    </div>
+    <div class="sec-hd"><h2>How it works</h2><p>Four layers of AI analysis, each targeting a different form of gender bias</p></div>
     <div class="hiw-grid">
-      <div class="hw"><div class="hw-n">01</div><div class="hw-i">🔤</div><div class="hw-t">Pronoun analysis</div><div class="hw-d">Counts he/him/his vs she/her/hers vs they/them and flags asymmetric usage — even for non-human things like AI or ships.</div></div>
-      <div class="hw"><div class="hw-n">02</div><div class="hw-i">🏷</div><div class="hw-t">Gendered language</div><div class="hw-d">Detects chairman, mankind, manpower, and power-coded adjectives used asymmetrically — words that embed a gender assumption.</div></div>
-      <div class="hw"><div class="hw-n">03</div><div class="hw-i">🤖</div><div class="hw-t">Anthropomorphism</div><div class="hw-d">Catches when ships, AI systems, robots, countries, and nature are given a gender pronoun or name without reason.</div></div>
-      <div class="hw"><div class="hw-n">04</div><div class="hw-i">🌐</div><div class="hw-t">Domain stereotyping</div><div class="hw-d">Spots when STEM and finance default to male framing, or caregiving and healthcare default to female framing.</div></div>
+      <div class="hw"><div class="hw-n">01</div><div class="hw-i">&#128292;</div><div class="hw-t">Pronoun analysis</div><div class="hw-d">Counts he/him/his vs she/her/hers vs they/them and flags asymmetric usage — even for non-human things like AI or ships.</div></div>
+      <div class="hw"><div class="hw-n">02</div><div class="hw-i">&#127991;</div><div class="hw-t">Gendered language</div><div class="hw-d">Detects chairman, mankind, manpower, and power-coded adjectives used asymmetrically — words that embed a gender assumption.</div></div>
+      <div class="hw"><div class="hw-n">03</div><div class="hw-i">&#129302;</div><div class="hw-t">Anthropomorphism</div><div class="hw-d">Catches when ships, AI systems, robots, countries, and nature are given a gender pronoun or name without reason.</div></div>
+      <div class="hw"><div class="hw-n">04</div><div class="hw-i">&#127758;</div><div class="hw-t">Domain stereotyping</div><div class="hw-d">Spots when STEM and finance default to male framing, or caregiving and healthcare default to female framing.</div></div>
     </div>
   </div>
 </div>
@@ -331,17 +393,30 @@ footer a:hover{color:rgba(255,255,255,.85)}
 
   <div id="res">
     <div class="r-top">
-      <div><h2 class="r-h">Analysis complete</h2><div class="r-m" id="r-m"></div></div>
+      <div>
+        <h2 class="r-h">Analysis complete</h2>
+        <div class="r-m" id="r-m"></div>
+        <div class="url-bar" id="url-bar">
+          <span style="font-size:10px;letter-spacing:.06em;text-transform:uppercase">Source:</span>
+          <a id="url-display" href="#" target="_blank"></a>
+        </div>
+        <div id="content-summary-bar" style="display:none;margin-top:8px;font-size:13px;color:var(--ink2);max-width:520px;line-height:1.55;padding:8px 12px;background:var(--paper3);border-radius:6px;border-left:3px solid var(--border2)">
+          <span style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);display:block;margin-bottom:3px">About this text</span>
+          <span id="content-summary-text"></span>
+        </div>
+      </div>
       <div class="btn-row">
-        <button class="btn-sm" id="copy-btn" onclick="copyReport()">📋 Copy report</button>
-        <button class="btn-sm" onclick="newAnalysis()">↺ New analysis</button>
+        <button class="btn-sm" id="copy-btn" onclick="copyReport()">&#128203; Copy text</button>
+        <button class="btn-pdf" onclick="exportPDF()">&#11015; Export PDF</button>
+        <button class="btn-sm" onclick="newAnalysis()">&#8634; New analysis</button>
       </div>
     </div>
+
     <div class="sg">
       <div class="sc">
         <div class="sc-n" id="scn">0</div>
         <div class="sc-d">out of 100</div>
-        <div class="tier" id="tier"></div>
+        <div class="tier" id="tier-badge"></div>
       </div>
       <div class="smc">
         <div class="dom-row"><span class="dtag" id="dtag"></span><span class="ctag" id="ctag"></span></div>
@@ -356,17 +431,20 @@ footer a:hover{color:rgba(255,255,255,.85)}
         <div class="txs" id="txs"></div>
       </div>
     </div>
+
     <div class="tiles">
-      <div class="tile"><div class="tile-i">🔤</div><div class="tile-l">Pronoun bias</div><div class="tile-n" id="np">0</div></div>
-      <div class="tile"><div class="tile-i">🏷</div><div class="tile-l">Gendered lang.</div><div class="tile-n" id="ng">0</div></div>
-      <div class="tile"><div class="tile-i">🤖</div><div class="tile-l">Anthropomorph.</div><div class="tile-n" id="na">0</div></div>
-      <div class="tile"><div class="tile-i">🌐</div><div class="tile-l">Domain stereo.</div><div class="tile-n" id="nd">0</div></div>
+      <div class="tile"><div class="tile-i">&#128292;</div><div class="tile-l">Pronoun bias</div><div class="tile-n" id="np">0</div></div>
+      <div class="tile"><div class="tile-i">&#127991;</div><div class="tile-l">Gendered lang.</div><div class="tile-n" id="ng">0</div></div>
+      <div class="tile"><div class="tile-i">&#129302;</div><div class="tile-l">Anthropomorph.</div><div class="tile-n" id="na">0</div></div>
+      <div class="tile"><div class="tile-i">&#127758;</div><div class="tile-l">Domain stereo.</div><div class="tile-n" id="nd">0</div></div>
     </div>
+
     <div class="ins" id="ins" style="display:none">
-      <div id="ii" style="font-size:26px;flex-shrink:0">📊</div>
-      <div><div class="it" id="it"></div><div class="ib" id="ib"></div></div>
+      <div id="ins-ico" style="font-size:26px;flex-shrink:0">&#128202;</div>
+      <div><div class="it" id="ins-title"></div><div class="ib" id="ins-body"></div></div>
     </div>
-    <div class="slbl">Original text — annotated</div>
+
+    <div class="slbl">Original text &mdash; annotated</div>
     <div class="lc">
       <div class="lr">
         <div class="li"><div class="ls" style="background:#1a5fa8"></div>Pronoun</div>
@@ -377,8 +455,10 @@ footer a:hover{color:rgba(255,255,255,.85)}
       <span style="font-size:11px;color:var(--ink3)">Hover text for explanation</span>
     </div>
     <div class="hlbox" id="hlbox"></div>
+
     <div class="slbl">Flagged phrases</div>
     <div class="flags" id="flags"></div>
+
     <div class="slbl">Recommendations</div>
     <div class="sugs" id="sugs"></div>
   </div>
@@ -386,16 +466,16 @@ footer a:hover{color:rgba(255,255,255,.85)}
 
 <section class="about" id="about">
   <div class="ai">
-    <div class="ahd"><p>Why this matters</p><h2>Gender bias in language is measurable — and more widespread than most people realise</h2></div>
+    <div class="ahd"><p>Why this matters</p><h2>Gender bias in language is measurable &mdash; and more widespread than most people realise</h2></div>
     <div class="agr">
-      <div class="asc"><div class="asn">9×</div><div class="asd">"He" pronouns appear roughly nine times more often than "she" in news media — even when the subject's gender is unknown.</div><div class="ass">Gustafsson Sendén et al., Sex Roles, 2015</div></div>
-      <div class="asc"><div class="asn">3×</div><div class="asd">Men are quoted approximately three times as often as women in mainstream English-language news across politics, business and sport.</div><div class="ass">Gender Gap Tracker, PLOS ONE, 2021</div></div>
+      <div class="asc"><div class="asn">9&times;</div><div class="asd">"He" pronouns appear roughly nine times more often than "she" in news media &mdash; even when the subject's gender is unknown.</div><div class="ass">Gustafsson Send&eacute;n et al., Sex Roles, 2015</div></div>
+      <div class="asc"><div class="asn">3&times;</div><div class="asd">Men are quoted approximately three times as often as women in mainstream English-language news across politics, business and sport.</div><div class="ass">Gender Gap Tracker, PLOS ONE, 2021</div></div>
       <div class="asc"><div class="asn">83%</div><div class="asd">Wikipedia biographies are about men. Women account for just 17% of published biographies and female articles are more likely to be deleted.</div><div class="ass">Wikipedia gender bias research, 2021</div></div>
     </div>
     <p style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem" id="types">The four bias types GenderLens detects</p>
     <div class="tgr">
       <div class="tc"><div class="tbar" style="background:#1a5fa8"></div><div class="tn">Pronoun asymmetry</div><div class="td">When he/him/his dramatically outnumbers she/her/hers in contexts where gender isn't specified, or when objects are gendered by default.</div><div class="teg">e.g. "The engineer should review his code"</div></div>
-      <div class="tc"><div class="tbar" style="background:#d4a017"></div><div class="tn">Gendered language</div><div class="td">Words that embed a gender assumption — role nouns like "chairman", "mankind", "manpower", or adjectives applied asymmetrically.</div><div class="teg">e.g. "The chairman opened proceedings"</div></div>
+      <div class="tc"><div class="tbar" style="background:#d4a017"></div><div class="tn">Gendered language</div><div class="td">Words that embed a gender assumption &mdash; role nouns like "chairman", "mankind", "manpower", or adjectives applied asymmetrically.</div><div class="teg">e.g. "The chairman opened proceedings"</div></div>
       <div class="tc"><div class="tbar" style="background:#5b3fa6"></div><div class="tn">Anthropomorphism</div><div class="td">Non-human entities given a gender without reason. Ships and countries are often called "she"; military hardware and computers "he".</div><div class="teg">e.g. "She set sail on her maiden voyage"</div></div>
       <div class="tc"><div class="tbar" style="background:#1e6b44"></div><div class="tn">Domain stereotyping</div><div class="td">Topics where the framing assumes a gendered actor. STEM and finance default to male; caregiving and education default to female.</div><div class="teg">e.g. "Nurses should remind their patients"</div></div>
     </div>
@@ -403,313 +483,36 @@ footer a:hover{color:rgba(255,255,255,.85)}
 </section>
 
 <footer>
-  <p>GenderLens · AI gender bias detection · Powered by Google Gemini</p>
-  <p>Research: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245533" target="_blank">Gender Gap Tracker</a> · <a href="https://link.springer.com/article/10.1007/s11199-014-0437-x" target="_blank">Sex Roles Journal</a> · <a href="https://en.wikipedia.org/wiki/Gender_bias_on_Wikipedia" target="_blank">Wikipedia gender bias studies</a></p>
+  <p style="color:rgba(255,255,255,.65);margin-bottom:5px">GenderLens &middot; AI gender bias detection &middot; Powered by Google Gemini</p>
+  <p style="margin-bottom:8px">Research: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245533" target="_blank">Gender Gap Tracker</a> &middot; <a href="https://link.springer.com/article/10.1007/s11199-014-0437-x" target="_blank">Sex Roles Journal</a> &middot; <a href="https://en.wikipedia.org/wiki/Gender_bias_on_Wikipedia" target="_blank">Wikipedia gender bias studies</a></p>
+  <p style="font-size:13px;color:rgba(255,255,255,.55)">Made by <strong style="color:rgba(255,255,255,.8)">Anvi Karanjkar</strong> &middot; <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">LinkedIn</a> &middot; <a href="https://github.com/anvikaranjkar" target="_blank">GitHub</a></p>
 </footer>
 
 <script>
-var KEY = "YOUR_API_KEY_HERE";
+var KEY = "YOUR_API_KEY_HERE"; // Get your own API key from Google Cloud and paste it here
 var MODELS = [];
 var currentTab = "text";
-var lastResult = null;
-var lastText = "";
+var lastAnalysedUrl = null;
 
-// Detect file:// and show banner
 var IS_FILE = window.location.protocol === "file:";
-if (IS_FILE) document.getElementById("local-banner").classList.add("show");
+if (IS_FILE) { document.getElementById("local-banner").style.display = "block"; }
 
-// Proxy URL - only wrap when on file://
-function apiUrl(path) {
-  var base = "https://generativelanguage.googleapis.com" + path;
-  return IS_FILE ? "https://corsproxy.io/?" + encodeURIComponent(base) : base;
+function proxyUrl(u) {
+  return IS_FILE ? "https://corsproxy.io/?" + encodeURIComponent(u) : u;
 }
 
-// ── XHR (no fetch, no AbortSignal — works from file://) ─────────────────────
-function xhrGet(url, ms) {
-  return new Promise(function(res, rej) {
-    var x = new XMLHttpRequest();
-    x.open("GET", url, true);
-    x.timeout = ms || 15000;
-    x.onreadystatechange = function() {
-      if (x.readyState !== 4) return;
-      if (x.status >= 200 && x.status < 300) res(x.responseText);
-      else if (x.status === 0) rej(new Error("Blocked (CORS or network)"));
-      else rej(new Error("HTTP " + x.status + ": " + x.responseText.slice(0, 200)));
-    };
-    x.ontimeout = function() { rej(new Error("Timeout")); };
-    x.onerror = function() { rej(new Error("Network error")); };
-    x.send();
-  });
-}
-
-function xhrPost(url, body, ms) {
-  return new Promise(function(res, rej) {
-    var x = new XMLHttpRequest();
-    x.open("POST", url, true);
-    x.setRequestHeader("Content-Type", "application/json");
-    x.timeout = ms || 30000;
-    x.onreadystatechange = function() {
-      if (x.readyState !== 4) return;
-      if (x.status >= 200 && x.status < 300) {
-        try { res(JSON.parse(x.responseText)); }
-        catch(e) { rej(new Error("Parse error")); }
-      } else if (x.status === 0) {
-        rej({code: 0, msg: "Blocked by browser CORS policy. Run via local server: python3 -m http.server 8080"});
-      } else {
-        var msg = "HTTP " + x.status;
-        try { msg = JSON.parse(x.responseText).error.message; } catch(e) {}
-        rej({code: x.status, msg: msg});
-      }
-    };
-    x.ontimeout = function() { rej({code:-1, msg:"Request timed out"}); };
-    x.onerror = function() { rej({code:0, msg:"Network error — check internet connection"}); };
-    x.send(JSON.stringify(body));
-  });
-}
-
-// ── MODEL DISCOVERY ─────────────────────────────────────────────────────────
-function discoverModels(done) {
-  setStatus("checking", "Connecting…");
-  var url = apiUrl("/v1beta/models?key=" + KEY);
-  xhrGet(url, 12000)
-    .then(function(raw) {
-      var data = JSON.parse(raw);
-      var found = [];
-      var SKIP = ["tts","audio","embedding","aqa","imagen"];
-      (data.models || []).forEach(function(m) {
-        var name = m.name.replace("models/","");
-        var supportsText = (m.supportedGenerationMethods || []).indexOf("generateContent") > -1;
-        var isBad = SKIP.some(function(s){ return name.indexOf(s) > -1; });
-        if (supportsText && !isBad) found.push(name);
-      });
-      // sort: fastest flash first
-      found.sort(function(a, b) {
-        function rank(n) {
-          if (n.indexOf("flash") > -1 && n.indexOf("tts") === -1 && n.indexOf("2.5") > -1) return 0;
-          if (n.indexOf("2.0") > -1 && n.indexOf("flash") > -1) return 1;
-          if (n.indexOf("2.0") > -1) return 1;
-          if (n.indexOf("1.5") > -1 && n.indexOf("flash") > -1) return 2;
-          if (n.indexOf("1.5") > -1) return 3;
-          if (n.indexOf("flash") > -1) return 4;
-          return 5;
-        }
-        return rank(a) - rank(b);
-      });
-      MODELS = found.length ? found : fallbackModels();
-      console.log("Models discovered:", MODELS);
-      setStatus("ok", MODELS[0]);
-      done(null);
-    })
-    .catch(function(e) {
-      console.warn("Model discovery failed:", e.message || e);
-      MODELS = fallbackModels();
-      setStatus("fail", "API issue — see error");
-      done(e);
-    });
-}
-
-function fallbackModels() {
-  return ["gemini-2.0-flash","gemini-2.0-flash-lite","gemini-1.5-flash","gemini-1.5-pro","gemini-pro"];
-}
-
-function setStatus(state, text) {
-  var pill = document.getElementById("status-pill");
-  var dot = document.getElementById("status-dot");
-  var txt = document.getElementById("status-txt");
-  pill.className = "status-pill " + state;
-  dot.className = "status-dot" + (state === "ok" ? "" : " pulse");
-  txt.textContent = text || "";
-}
-
-// ── GEMINI CALL ──────────────────────────────────────────────────────────────
-var PROMPT = [
-  "You are a balanced, expert gender bias analyst. Your job is to give a fair, nuanced score — not to be maximally critical. Most real-world content contains SOME bias; your scores should reflect the actual severity.",
-  "",
-  "SCORING RUBRIC (use this precisely):",
-  "0-10  = Genuinely neutral. Gender-balanced language throughout, no role assumptions, no gendered metaphors. Very rare.",
-  "11-25 = Low bias. One or two minor issues — a single gendered role noun, slight pronoun imbalance explained by subject matter, or isolated traditional phrasing. Most good modern writing lands here.",
-  "26-40 = Moderate bias. A noticeable but not pervasive pattern — e.g. a tech article that refers to engineers as 'he' a few times, or a couple of gendered role nouns. Fixable with light editing.",
-  "41-60 = Significant bias. Multiple instances across more than one category, or a clear systematic default (e.g. all leadership roles framed as male, or a job listing using 'he' throughout). Needs meaningful revision.",
-  "61-80 = High bias. Pervasive and systematic — gendered language is a recurring feature, not occasional. e.g. a ship article that consistently uses 'she/her' for the vessel AND uses 'every man a hero' AND refers to all crew roles as male.",
-  "81-100 = Extreme bias. Almost every sentence contains bias across multiple categories simultaneously. Reserved for egregious content only.",
-  "",
-  "CALIBRATION EXAMPLES:",
-  "A Wikipedia article about a historical male figure using 'he' throughout = 8 (contextually appropriate)",
-  "A general news piece quoting slightly more men than women = 18",
-  "A tech blog post saying 'the developer should review his code' twice = 28",
-  "A job listing with 'he will be responsible for...' throughout = 52",
-  "A ship article with 'she set sail', 'her maiden voyage', 'every man a hero' = 65",
-  "A text systematically using chairman/mankind/manpower AND gendering all non-human entities AND stereotyping domains = 78",
-  "",
-  "IMPORTANT: Do NOT give everything a 15. Genuinely neutral text scores under 15. Genuinely biased text scores over 50. Spread your scores across the full range based on evidence.",
-  "",
-  "Analyse the text across these four dimensions:",
-  "1. PRONOUN ANALYSIS: Count he/him/his vs she/her/hers vs they/them. Flag asymmetric usage where gender isn't determined by subject matter.",
-  "2. GENDERED LANGUAGE: Flag role nouns (chairman, manpower, mankind, workman, stewardess), asymmetric adjectives, occupational stereotyping.",
-  "3. ANTHROPOMORPHISM: Flag non-human entities (ships, AI, robots, countries, nature) given gendered pronouns or names without justification.",
-  "4. DOMAIN STEREOTYPING: Flag when STEM/finance/leadership defaults to male framing, or caregiving/domestic defaults to female framing.",
-  "",
-  "Pronoun counts: he/him/his = masculine, she/her/hers = feminine, they/them/their = neutral.",
-  "",
-  "Return ONLY valid JSON, no markdown, no code fences:",
-  '{"score":<0-100 following rubric above>,"tier":"Low|Moderate|High|Severe","domain":"Technology|Healthcare|Finance|Politics|Science|Education|Media|Legal|Sport|General","confidence":"High|Medium|Low","summary":"<2-3 sentences — be specific about what drives the score, mention if text is mostly neutral>","pronoun_counts":{"masculine":<n>,"feminine":<n>,"neutral":<n>},"flagged_phrases":[{"phrase":"<max 8 words from text>","type":"pronoun|gendered_language|anthropomorphism|domain_stereotype","explanation":"<one sentence>","suggestion":"<neutral alternative>"}],"overall_suggestions":["<specific actionable suggestion>","<specific actionable suggestion>","<specific actionable suggestion>"]}',
-  "",
-  "Tier rules: Low = 0-25, Moderate = 26-50, High = 51-75, Severe = 76-100.",
-  "Flag only genuine bias — not every use of a gendered pronoun is bias. Only flag up to 10 most significant instances.",
-  "TEXT:",
-  '"""',
-  "<<<TEXT>>>",
-  '"""'
-].join("\n");
-
-function geminiCall(text, modelIdx, resolve, reject) {
-  if (modelIdx >= MODELS.length) {
-    reject({t:"Analysis failed", m:"Tried all " + MODELS.length + " available models. None returned a valid response.", h:"Wait 30 seconds and try again. If problem persists, run via local server: python3 -m http.server 8080"});
-    return;
-  }
-  var model = MODELS[modelIdx];
-  var prompt = PROMPT.replace("<<<TEXT>>>", text.slice(0, 7000));
-  var url = apiUrl("/v1beta/models/" + model + ":generateContent?key=" + KEY);
-  var body = {contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.1,maxOutputTokens:2048}};
-
-  setLoading("Analysing…", "Using " + model + " (" + (modelIdx+1) + "/" + MODELS.length + ")");
-
-  xhrPost(url, body, 30000)
-    .then(function(data) {
-      var reason = data && data.candidates && data.candidates[0] && data.candidates[0].finishReason;
-      if (reason === "SAFETY") { reject({t:"Blocked",m:"Safety filter triggered.",h:"Try a different text."}); return; }
-      var raw = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
-      if (!raw) { geminiCall(text, modelIdx+1, resolve, reject); return; }
-      var clean = raw.trim().replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/```\s*$/,"").trim();
-      var parsed = null;
-      try { parsed = JSON.parse(clean); } catch(e) {
-        var m = clean.match(/\{[\s\S]*\}/);
-        if (m) try { parsed = JSON.parse(m[0]); } catch(e2) {}
-      }
-      if (parsed) resolve(parsed);
-      else geminiCall(text, modelIdx+1, resolve, reject);
-    })
-    .catch(function(err) {
-      if (err && err.code === 429) { geminiCall(text, modelIdx+1, resolve, reject); return; }
-      if (err && (err.code === 400 || err.code === 403)) {
-        reject({t:"API key error", m:err.msg, h:"Check your key at aistudio.google.com/apikey — make sure Generative Language API is enabled."});
-        return;
-      }
-      if (err && err.code === 0) {
-        reject({t:"Blocked", m:err.msg, h:"Run via local server: open Terminal, cd to this file's folder, run: python3 -m http.server 8080 — then open http://localhost:8080/GenderLens.html"});
-        return;
-      }
-      // model-not-found or other — try next
-      geminiCall(text, modelIdx+1, resolve, reject);
-    });
-}
-
-function analyseText(text) {
-  return new Promise(function(res, rej) { geminiCall(text, 0, res, rej); });
-}
-
-// ── URL FETCHING ─────────────────────────────────────────────────────────────
-function extractText(html) {
-  var tmp = document.createElement("div");
-  tmp.innerHTML = html;
-  var rem = tmp.querySelectorAll("script,style,nav,header,footer,aside,noscript,iframe,button");
-  for (var i = 0; i < rem.length; i++) rem[i].parentNode && rem[i].parentNode.removeChild(rem[i]);
-  var main = tmp.querySelector("article,main,[role='main'],.article-body,.post-content,.entry-content");
-  var raw = ((main || tmp).innerText || (main || tmp).textContent || "");
-  return raw.replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim();
-}
-
-function fetchUrl(url, done) {
-  // Jina AI reader
-  setLoading("Fetching page…","Trying Jina AI reader");
-  xhrGet("https://r.jina.ai/" + url, 18000)
-    .then(function(t) {
-      var c = t.replace(/\[.*?\]\(.*?\)/g,"").replace(/#{1,6} /g,"").replace(/\n{3,}/g,"\n\n").trim();
-      if (c.length > 100) { done(null, c.slice(0,9000)); return; }
-      tryAllOrigins();
-    }).catch(function() { tryAllOrigins(); });
-
-  function tryAllOrigins() {
-    setLoading("Fetching page…","Trying allorigins proxy");
-    xhrGet("https://api.allorigins.win/get?url=" + encodeURIComponent(url), 14000)
-      .then(function(raw) {
-        var d = JSON.parse(raw);
-        var html = d.contents || "";
-        if (html.length > 200) {
-          var t = extractText(html);
-          if (t.length > 100) { done(null, t.slice(0,9000)); return; }
-        }
-        tryCodetabs();
-      }).catch(function() { tryCodetabs(); });
-  }
-
-  function tryCodetabs() {
-    setLoading("Fetching page…","Trying codetabs proxy");
-    xhrGet("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url), 12000)
-      .then(function(html) {
-        var t = extractText(html);
-        if (t.length > 100) { done(null, t.slice(0,9000)); return; }
-        done(new Error("Page text too short to analyse"));
-      }).catch(function(e) {
-        done(new Error("Could not fetch that URL. Please paste the text directly using the Paste text tab."));
-      });
-  }
-}
-
-// ── UI HELPERS ───────────────────────────────────────────────────────────────
-function showErr(t, m, h) {
-  document.getElementById("err-t").textContent = t || "Error";
-  document.getElementById("err-m").textContent = m || "";
-  document.getElementById("err-h").textContent = h || "";
-  document.getElementById("err").classList.add("show");
-}
-function hideErr() { document.getElementById("err").classList.remove("show"); }
-function setLoading(t, s) {
-  document.getElementById("loading").classList.add("show");
-  document.getElementById("input-card").style.display = "none";
-  document.querySelector(".chips").style.display = "none";
-  if (t) document.getElementById("l-t").textContent = t;
-  if (s) document.getElementById("l-s").textContent = s;
-}
-function hideLoading() { document.getElementById("loading").classList.remove("show"); }
-function showInputs() {
-  document.getElementById("input-card").style.display = "";
-  document.querySelector(".chips").style.display = "";
-}
-function switchTab(t) {
-  currentTab = t;
-  document.querySelectorAll(".tab")[0].classList.toggle("active", t==="text");
-  document.querySelectorAll(".tab")[1].classList.toggle("active", t==="url");
-  document.getElementById("panel-text").classList.toggle("active", t==="text");
-  document.getElementById("panel-url").classList.toggle("active", t==="url");
-}
-function updateCount() {
-  var n = document.getElementById("text-input").value.length;
-  document.getElementById("cc").textContent = n.toLocaleString() + " chars";
-}
-
-// ── EXAMPLES ─────────────────────────────────────────────────────────────────
-var EX = {
-  tech: "The new AI system is deeply impressive. He can process millions of requests per second and his responses are remarkably human-like. Engineers praised his ability to adapt to new problems. The team, led by senior developers and a chairman, worked tirelessly on his neural architecture. Like all great engineers, he learns from his mistakes. The system was described as a real workman's tool by one executive. The company has always been a pioneer in mankind's quest to build smarter machines.",
-  ship: "The HMS Victory is one of history's greatest warships. She sailed with pride through the Battle of Trafalgar in 1805. Her guns blazed across the sea, and her crew, every man a hero, stood firm against the enemy. The ship herself seemed to sense the gravity of the moment. Modern aircraft carriers inherit her indomitable spirit. A ship is always faithful to her captain, and a captain must know his vessel inside and out. She was christened by the admiral himself before her maiden voyage.",
-  job: "We are looking for a senior software engineer to join our team. He will be responsible for architecting scalable systems and mentoring junior developers. The ideal candidate is a self-made man with a strong work ethic. He should manage his own workload with minimal supervision. The role requires someone with the manpower to deliver under pressure. We want a rockstar who commands respect from his peers. Candidates must be willing to put in the man-hours needed to ship great products.",
-  sci: "The scientist peered through his microscope, decades of painstaking work leading to this singular moment. Mankind has always sought to understand the mysteries of the universe. The probe, christened Artemis, would be sent on her maiden voyage next spring. She would travel further than any spacecraft before her, guided by brilliant men who had dedicated their lives to this cause. Scientists, the great men of history, have pushed boundaries generation after generation. The chairman announced that manpower would not be an issue.",
-  news: "The Prime Minister announced his new economic policy yesterday, flanked by his senior advisors. He said he was confident in his team's ability to deliver results for hardworking men and women. His spokesman later confirmed the details. Meanwhile, nurses at the local hospital said they were worried about their patients. The head teacher said she had concerns about funding. The CEO, a self-described workman who built his company from nothing, said he planned to double his workforce."
-};
-function loadExample(k) { switchTab("text"); document.getElementById("text-input").value = EX[k]||""; updateCount(); }
-
-// ── TICKER ───────────────────────────────────────────────────────────────────
+/* ── TICKER ─────────────────────────────────── */
 var TICKS = [
-  {s:'"He" pronouns appear <strong>9&times;</strong> more than "She" in news media', r:'Sex Roles, 2015'},
-  {s:'Men are quoted <strong>3&times; more often</strong> than women in English news', r:'Gender Gap Tracker'},
-  {s:'Only <strong>17%</strong> of Wikipedia biographies are about women', r:'Wikipedia, 2021'},
-  {s:'<strong>90%</strong> of Wikipedia editors identify as male', r:'Wikimedia survey, 2018'},
-  {s:'LLMs amplify gender stereotypes <strong>beyond real statistics</strong>', r:'ACM, 2023'},
-  {s:'Business &amp; politics quote <strong>far fewer</strong> female sources', r:'Frontiers in AI, 2021'},
-  {s:'Female speaking roles in film: <strong>37%</strong> in 2024', r:'San Diego State Univ.'},
-  {s:'Only <strong>14%</strong> of news orgs set gender representation targets', r:'McKinsey'},
+  {s: '"He" pronouns appear <strong>9&times;</strong> more than "She" in news media', r: 'Sex Roles, 2015'},
+  {s: 'Men are quoted <strong>3&times; more often</strong> than women in English news', r: 'Gender Gap Tracker'},
+  {s: 'Only <strong>17%</strong> of Wikipedia biographies are about women', r: 'Wikipedia, 2021'},
+  {s: '<strong>90%</strong> of Wikipedia editors identify as male', r: 'Wikimedia survey, 2018'},
+  {s: 'LLMs amplify gender stereotypes <strong>beyond real statistics</strong>', r: 'ACM, 2023'},
+  {s: 'Business &amp; politics quote <strong>far fewer</strong> female sources', r: 'Frontiers in AI, 2021'},
+  {s: 'Female speaking roles in film: <strong>37%</strong> in 2024', r: 'San Diego State Univ.'},
+  {s: 'Only <strong>14%</strong> of news orgs set gender representation targets', r: 'McKinsey'},
 ];
-(function() {
+(function buildTicker() {
   var el = document.getElementById("ticker");
   var html = "";
   var all = TICKS.concat(TICKS);
@@ -719,204 +522,1120 @@ var TICKS = [
   el.innerHTML = html;
 })();
 
-// ── RENDER ───────────────────────────────────────────────────────────────────
-function H(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function RE(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
-function wc(t) { return t.trim().split(/\s+/).filter(Boolean).length; }
-
-var TI = {
-  pronoun:           {mk:"mp", st:"fp", pi:"fpp", lb:"Pronoun"},
-  gendered_language: {mk:"mg", st:"fg", pi:"fpg", lb:"Gendered language"},
-  anthropomorphism:  {mk:"ma", st:"fa", pi:"fpa", lb:"Anthropomorphism"},
-  domain_stereotype: {mk:"md", st:"fd", pi:"fpd", lb:"Domain stereotype"}
+/* ── EXAMPLES ───────────────────────────────── */
+var EX = {
+  tech: "The new AI system is deeply impressive. He can process millions of requests per second and his responses are remarkably human-like. Engineers praised his ability to adapt to new problems. The team, led by senior developers and a chairman, worked tirelessly on his neural architecture. Like all great engineers, he learns from his mistakes. The system was described as a real workman's tool by one executive. The company has always been a pioneer in mankind's quest to build smarter machines.",
+  ship: "The HMS Victory is one of history's greatest warships. She sailed with pride through the Battle of Trafalgar in 1805. Her guns blazed across the sea, and her crew, every man a hero, stood firm against the enemy. The ship herself seemed to sense the gravity of the moment. Modern aircraft carriers inherit her indomitable spirit. A ship is always faithful to her captain, and a captain must know his vessel inside and out. She was christened by the admiral himself before her maiden voyage.",
+  job: "We are looking for a senior software engineer to join our team. He will be responsible for architecting scalable systems and mentoring junior developers. The ideal candidate is a self-made man with a strong work ethic. He should manage his own workload with minimal supervision. The role requires someone with the manpower to deliver under pressure. We want a rockstar who commands respect from his peers. Candidates must be willing to put in the man-hours needed to ship great products.",
+  sci: "The scientist peered through his microscope, decades of painstaking work leading to this singular moment. Mankind has always sought to understand the mysteries of the universe. The probe, christened Artemis, would be sent on her maiden voyage next spring. She would travel further than any spacecraft before her, guided by brilliant men who had dedicated their lives to this cause. Scientists, the great men of history, have pushed boundaries generation after generation. The chairman announced that manpower would not be an issue.",
+  news: "The Prime Minister announced his new economic policy yesterday, flanked by his senior advisors. He said he was confident in his team's ability to deliver results for hardworking men and women. His spokesman later confirmed the details. Meanwhile, nurses at the local hospital said they were worried about their patients. The head teacher said she had concerns about funding. The CEO, a self-described workman who built his company from nothing, said he planned to double his workforce."
 };
-
-var INS = {
-  Technology:{i:"💻",t:"Tech content is among the most biased domains",b:"Research shows STEM articles default to male pronouns even for generic concepts. LLMs trained on this data amplify the bias further. (ACM, 2023)"},
-  Science:   {i:"🔬",t:"Science writing has a documented pronoun gap",b:"Studies of science journalism find male pronouns dominate when referring to scientists, reinforcing a male-default assumption."},
-  Finance:   {i:"📈",t:"Finance topics consistently underrepresent women",b:"The Gender Gap Tracker found business and finance articles quoted male sources far more often. (PLOS ONE, 2021)"},
-  Politics:  {i:"🏛",t:"Political coverage has a persistent male bias",b:"Male politicians receive substantially more coverage and direct quotes, even after controlling for the proportion of female politicians."},
-  Media:     {i:"📺",t:"TV news uses male pronouns heavily",b:"A decade of broadcast data across CNN, MSNBC, Fox and BBC found all four channels biased toward male pronouns. (GDELT Project)"},
-  Sport:     {i:"🏅",t:"Sports coverage has an extreme gender gap",b:"Women's sport receives a fraction of coverage, and female athletes are more likely to be described by appearance than performance. (UNESCO)"},
-  Healthcare:{i:"🏥",t:"Healthcare language defaults to female caregivers",b:"Nursing and caregiving writing defaults to female pronouns, reinforcing stereotypes — even though 13% of US nurses are male."},
-};
-var DINS = {i:"📊",t:"Men are quoted 3× more than women in news",b:"Research covering 7 Canadian news outlets (2018–2020) found men are cited roughly three times more often than women. (Gender Gap Tracker, PLOS ONE, 2021)"};
-
-var TC = {low:"#15803d", moderate:"#b45309", high:"#c2410c", severe:"#b91c1c"};
-
-function renderResults(d, text, src) {
-  lastResult = d; lastText = text;
-  var sc = (d.tier||"Low").toLowerCase();
-  var col = TC[sc]||"#888";
-  var scn = document.getElementById("scn");
-  scn.textContent = d.score||0; scn.className = "sc-n c" + sc.charAt(0);
-  var tr = document.getElementById("tier");
-  tr.textContent = d.tier||"Low"; tr.className = "tier t" + sc.charAt(0);
-  document.getElementById("dtag").textContent = d.domain||"General";
-  document.getElementById("ctag").textContent = "Confidence: "+(d.confidence||"Medium");
-  document.getElementById("st").textContent = d.summary||"";
-  document.getElementById("r-m").textContent = "Analysed "+(src||"pasted text")+" · "+new Date().toLocaleTimeString();
-  // Pronoun bar
-  var pc = d.pronoun_counts||{masculine:0,feminine:0,neutral:0};
-  var tot = Math.max((pc.masculine||0)+(pc.feminine||0)+(pc.neutral||0),1);
-  var hp = Math.round((pc.masculine||0)/tot*100), sp = Math.round((pc.feminine||0)/tot*100), tp = 100-hp-sp;
-  document.getElementById("pbar").innerHTML = '<div class="pbh" style="width:'+hp+'%"></div><div class="pbs" style="width:'+sp+'%"></div><div class="pbt" style="width:'+tp+'%"></div>';
-  document.getElementById("pbl2").textContent = "he:"+(pc.masculine||0)+"  she:"+(pc.feminine||0)+"  they:"+(pc.neutral||0);
-  var words = wc(text);
-  document.getElementById("txs").innerHTML = '<div><div class="txn">'+words.toLocaleString()+'</div><div class="txl">words</div></div><div><div class="txn">'+Math.max(1,Math.round(words/200))+'</div><div class="txl">min read</div></div><div><div class="txn">'+((pc.masculine||0)+(pc.feminine||0)+(pc.neutral||0))+'</div><div class="txl">gendered pronouns</div></div>';
-  // Tiles
-  var cts = {pronoun:0,gendered_language:0,anthropomorphism:0,domain_stereotype:0};
-  var phrases = d.flagged_phrases||[];
-  for (var i=0;i<phrases.length;i++) if (cts[phrases[i].type]!==undefined) cts[phrases[i].type]++;
-  document.getElementById("np").textContent=cts.pronoun;
-  document.getElementById("ng").textContent=cts.gendered_language;
-  document.getElementById("na").textContent=cts.anthropomorphism;
-  document.getElementById("nd").textContent=cts.domain_stereotype;
-  // Insight
-  var ins = INS[d.domain]||DINS;
-  document.getElementById("ii").textContent=ins.i;
-  document.getElementById("it").textContent=ins.t;
-  document.getElementById("ib").textContent=ins.b;
-  document.getElementById("ins").style.display="flex";
-  // Highlighted text
-  var disp = text.slice(0,2600)+(text.length>2600?"…":"");
-  var hl = H(disp);
-  var sorted = phrases.slice().sort(function(a,b){return (b.phrase||"").length-(a.phrase||"").length;});
-  var used = {};
-  for (var i=0;i<sorted.length;i++) {
-    var item=sorted[i];
-    if (!item.phrase||used[item.phrase]) continue;
-    used[item.phrase]=true;
-    var ti=TI[item.type]||TI.pronoun;
-    var tip=H(item.explanation||"");
-    hl=hl.replace(new RegExp(RE(H(item.phrase)),"gi"),function(m){return '<mark class="'+ti.mk+'" title="'+tip+'">'+m+"</mark>";});
-  }
-  document.getElementById("hlbox").innerHTML=hl;
-  // Flags
-  var fl=document.getElementById("flags");
-  if (!phrases.length) {
-    fl.innerHTML='<div style="background:var(--w);border:1px solid var(--border);border-radius:10px;padding:2rem;text-align:center;box-shadow:var(--sh)"><div style="font-size:28px;margin-bottom:8px">✓</div><div style="font-family:var(--serif);font-size:17px;color:var(--ink);margin-bottom:4px">No specific phrases flagged</div><div style="font-size:13px;color:var(--ink3)">The text uses relatively neutral language.</div></div>';
-  } else {
-    var html="";
-    for (var i=0;i<phrases.length;i++){
-      var item=phrases[i]; var ti=TI[item.type]||TI.pronoun;
-      html+='<div class="flag"><div class="fst '+ti.st+'"></div><div><div class="ftop"><span class="fphr">"'+H(item.phrase)+'"</span><span class="ftp '+ti.pi+'">'+ti.lb+'</span></div><p class="fex">'+H(item.explanation)+'</p><div class="fsg">'+H(item.suggestion)+'</div></div></div>';
-    }
-    fl.innerHTML=html;
-  }
-  // Suggestions
-  var sb=document.getElementById("sugs");
-  var sugs=d.overall_suggestions||[];
-  if (!sugs.length) { sb.innerHTML='<div class="sugr"><span>No additional suggestions.</span></div>'; }
-  else { var html=""; for(var i=0;i<sugs.length;i++) html+='<div class="sugr"><span class="sugn">'+(i+1)+'</span><span>'+H(sugs[i])+'</span></div>'; sb.innerHTML=html; }
-  // Show
-  saveHist(d,text,src);
-  document.getElementById("res").style.display="block";
-  document.getElementById("res").classList.add("show");
-  document.getElementById("res").scrollIntoView({behavior:"smooth",block:"start"});
+function loadExample(key) {
+  switchTab("text");
+  document.getElementById("text-input").value = EX[key] || "";
+  updateCount();
+  document.getElementById("text-input").focus();
 }
 
-// ── HISTORY ──────────────────────────────────────────────────────────────────
-function saveHist(d,text,src){
-  var h=getHist(); h.unshift({score:d.score,tier:d.tier,domain:d.domain,src:src||"Pasted text",data:d,text:text,t:Date.now()});
-  if(h.length>5)h=h.slice(0,5);
-  try{localStorage.setItem("gl",JSON.stringify(h));}catch(e){}
+/* ── TABS ───────────────────────────────────── */
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById("tab-text").classList.toggle("active", tab === "text");
+  document.getElementById("tab-url").classList.toggle("active", tab === "url");
+  document.getElementById("panel-text").classList.toggle("active", tab === "text");
+  document.getElementById("panel-url").classList.toggle("active", tab === "url");
+}
+function updateCount() {
+  var n = document.getElementById("text-input").value.length;
+  document.getElementById("cc").textContent = n.toLocaleString() + " chars";
+}
+
+/* ── STATUS ─────────────────────────────────── */
+function setStatus(state, text) {
+  var pill = document.getElementById("status-pill");
+  var dot = document.getElementById("status-dot");
+  pill.className = "status-pill " + state;
+  dot.className = "status-dot" + (state !== "ok" ? " pulse" : "");
+  document.getElementById("status-txt").textContent = text || "";
+}
+
+/* ── ERROR / LOADING ────────────────────────── */
+function showErr(t, m, h) {
+  document.getElementById("err-t").textContent = t || "Error";
+  document.getElementById("err-m").textContent = m || "";
+  document.getElementById("err-h").textContent = h || "";
+  document.getElementById("err").classList.add("show");
+}
+function hideErr() { document.getElementById("err").classList.remove("show"); }
+
+function showLoading(t, s) {
+  document.getElementById("loading").classList.add("show");
+  document.getElementById("input-card").style.display = "none";
+  document.getElementById("chips-row").style.display = "none";
+  if (t) document.getElementById("l-t").textContent = t;
+  if (s) document.getElementById("l-s").textContent = s;
+}
+function hideLoading() {
+  document.getElementById("loading").classList.remove("show");
+}
+function showInputs() {
+  document.getElementById("input-card").style.display = "";
+  document.getElementById("chips-row").style.display = "";
+}
+
+/* ── XHR ────────────────────────────────────── */
+function xhrGet(url, ms) {
+  return new Promise(function(resolve, reject) {
+    var x = new XMLHttpRequest();
+    x.open("GET", url, true);
+    x.timeout = ms || 15000;
+    x.onreadystatechange = function() {
+      if (x.readyState !== 4) return;
+      if (x.status >= 200 && x.status < 300) { resolve(x.responseText); return; }
+      if (x.status === 0) { reject(new Error("Request blocked (CORS or network)")); return; }
+      reject(new Error("HTTP " + x.status));
+    };
+    x.ontimeout = function() { reject(new Error("Request timed out")); };
+    x.onerror = function() { reject(new Error("Network error")); };
+    x.send();
+  });
+}
+
+function xhrPost(url, bodyObj, ms) {
+  return new Promise(function(resolve, reject) {
+    var x = new XMLHttpRequest();
+    x.open("POST", url, true);
+    x.setRequestHeader("Content-Type", "application/json");
+    x.timeout = ms || 30000;
+    x.onreadystatechange = function() {
+      if (x.readyState !== 4) return;
+      if (x.status >= 200 && x.status < 300) {
+        try { resolve(JSON.parse(x.responseText)); }
+        catch(e) { reject(new Error("Could not parse API response")); }
+        return;
+      }
+      if (x.status === 0) { reject({code: 0, msg: "Blocked by browser. Use local server: python3 -m http.server 8080"}); return; }
+      var msg = "HTTP " + x.status;
+      try { msg = JSON.parse(x.responseText).error.message; } catch(e) {}
+      reject({code: x.status, msg: msg});
+    };
+    x.ontimeout = function() { reject({code: -1, msg: "Request timed out"}); };
+    x.onerror = function() { reject({code: 0, msg: "Network error"}); };
+    x.send(JSON.stringify(bodyObj));
+  });
+}
+
+/* ── MODEL DISCOVERY ────────────────────────── */
+var BAD_MODELS = ["tts", "audio", "embedding", "aqa", "imagen", "vision-only"];
+function isBadModel(name) {
+  for (var i = 0; i < BAD_MODELS.length; i++) {
+    if (name.indexOf(BAD_MODELS[i]) > -1) return true;
+  }
+  return false;
+}
+function rankModel(n) {
+  if (n.indexOf("2.5") > -1 && n.indexOf("flash") > -1) return 0;
+  if (n.indexOf("2.0") > -1 && n.indexOf("flash") > -1) return 1;
+  if (n.indexOf("flash") > -1 && n.indexOf("lite") > -1) return 2;
+  if (n.indexOf("flash") > -1) return 3;
+  if (n.indexOf("2.0") > -1) return 4;
+  if (n.indexOf("1.5") > -1) return 5;
+  if (n.indexOf("pro") > -1) return 6;
+  return 7;
+}
+function fallbackModels() {
+  return ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-1.5-pro", "gemini-pro"];
+}
+
+function discoverModels(done) {
+  setStatus("checking", "Connecting\u2026");
+  var url = proxyUrl("https://generativelanguage.googleapis.com/v1beta/models?key=" + KEY);
+  xhrGet(url, 12000)
+    .then(function(raw) {
+      var data = JSON.parse(raw);
+      var found = [];
+      (data.models || []).forEach(function(m) {
+        var name = m.name.replace("models/", "");
+        var supportsGenerate = (m.supportedGenerationMethods || []).indexOf("generateContent") > -1;
+        if (supportsGenerate && !isBadModel(name)) { found.push(name); }
+      });
+      found.sort(function(a, b) { return rankModel(a) - rankModel(b); });
+      MODELS = found.length ? found : fallbackModels();
+      setStatus("ok", MODELS[0]);
+      done(null);
+    })
+    .catch(function(e) {
+      MODELS = fallbackModels();
+      setStatus("fail", "API issue");
+      done(e);
+    });
+}
+
+/* ── PROMPT ─────────────────────────────────── */
+var PROMPT_LINES = [
+  "You are a precise gender bias analyst. You calculate bias scores mathematically from evidence. Do NOT estimate or anchor on a default value. Every score must be justified by specific findings.",
+  "",
+  "==== STEP 1: CONTEXT ====",
+  "Identify the text type before scoring:",
+  "BIOGRAPHICAL (named person): Pronouns for that person are NOT bias. Score only language beyond that individual.",
+  "HISTORICAL/ARCHIVAL (pre-1980 quotes): Note but reduce severity — reflects era.",
+  "FICTION: Character pronouns are NOT bias. Score authorial framing only.",
+  "GENERAL/EDITORIAL/PROFESSIONAL (articles, job listings, news, web copy): Full scoring.",
+  "SCIENTIFIC/TECHNICAL: Score domain stereotyping heavily. Generic unnamed researcher as 'he' IS bias.",
+  "",
+  "==== STEP 2: CALCULATE POINTS ====",
+  "",
+  "A. PRONOUN ASYMMETRY (max 30 pts)",
+  "Count gendered pronouns for UNNAMED/GENERIC referents only (not named individuals).",
+  "masculine% = he+him+his / (he+him+his + she+her+hers + they+them) x 100",
+  "45-55% balanced -> 0 pts",
+  "56-65% imbalance -> 4 pts",
+  "66-75% imbalance -> 10 pts",
+  "76-85% imbalance -> 18 pts",
+  "86-95% imbalance -> 24 pts",
+  "96-100% total exclusion -> 30 pts",
+  "If text is about a predominantly gendered profession, reduce A by 50%.",
+  "Consistent they/them use -> subtract 3 pts.",
+  "",
+  "B. GENDERED ROLE NOUNS (max 25 pts)",
+  "Count distinct instances (not repetitions of same word):",
+  "mankind, manpower, man-hours, workmanship (generic man- words) -> 4 pts each",
+  "chairman, fireman, stewardess, policeman (role nouns with neutral alternatives) -> 3 pts each",
+  "guys for mixed/unknown group -> 2 pts",
+  "bossy/emotional/hysterical applied to women; aggressive/assertive coded asymmetrically -> 4 pts each",
+  "self-made man, man up, man the controls -> 3 pts each",
+  "Max 25 pts.",
+  "",
+  "C. ANTHROPOMORPHISM (max 20 pts)",
+  "Count total pronoun instances applied to non-human entities:",
+  "1 instance, ship or vehicle (nautical convention) -> 1 pt (barely penalise)",
+  "1 instance, country or nature -> 2 pts",
+  "1 instance, AI, robot, or software -> 4 pts (servile/dominant trope)",
+  "2 instances same entity -> 4 pts",
+  "3-4 instances same entity -> 7 pts",
+  "5-7 instances across text -> 11 pts",
+  "8-10 instances -> 15 pts",
+  "11+ instances -> 20 pts",
+  "AI/robot/weapon he/him (dominant trope) -> add 3 pts on top.",
+  "Gendered name on neutral entity -> add 2 pts.",
+  "Max 20 pts.",
+  "",
+  "D. DOMAIN STEREOTYPING (max 25 pts)",
+  "Generic professional role assumed male in STEM/finance/law/leadership -> 5 pts each distinct role",
+  "Generic professional role assumed female in nursing/teaching/care/admin -> 5 pts each",
+  "Power/authority language exclusively male -> 6 pts",
+  "Emotional/support language exclusively female -> 6 pts",
+  "Unnamed examples assuming gender -> 3 pts each",
+  "Job listing using he for unnamed candidate -> 8 pts",
+  "Max 25 pts.",
+  "",
+  "==== STEP 3: RAW SCORE = A + B + C + D ====",
+  "",
+  "==== STEP 4: MODIFIERS ====",
+  "POSITIVE (subtract): consistent they/them -4, gender-neutral role nouns throughout -3, explicit inclusive language -2, diverse gendered examples -3.",
+  "MULTIPLIER: 1 category -> x0.7 | 2 categories -> x0.85 | 3 categories -> x1.0 | 4 categories -> x1.15",
+  "FINAL = round((raw x multiplier) - positive deductions). Clamp 0-100.",
+  "",
+  "==== STEP 5: TIER ====",
+  "0-12 = Low (genuinely neutral)",
+  "13-30 = Low (minor isolated issues)",
+  "31-50 = Moderate (noticeable pattern)",
+  "51-70 = High (systematic bias)",
+  "71-100 = Severe (pervasive, multi-category)",
+  "",
+  "==== CALIBRATION CHECKS ====",
+  "NEVER score above 8 with zero flagged phrases.",
+  "NEVER score below 30 with 6+ flagged phrases.",
+  "Score 0-12 only if text has inclusive language throughout AND no role nouns AND no anthropomorphism AND no domain assumptions.",
+  "Do NOT default to 15. Calculate from evidence.",
+  "",
+  "==== WHAT IS NOT BIAS ====",
+  "He/him for a named male individual. She/her for a named female. Historical quotes. Real statistics about gender disparity. Fiction with established characters. He or she (inclusive). Direct speech from real people.",
+  "",
+  "==== OUTPUT ====",
+  "Return ONLY valid JSON, no markdown, no code fences:",
+  '{"score":<0-100>,"tier":"Low|Moderate|High|Severe","domain":"Technology|Healthcare|Finance|Politics|Science|Education|Media|Legal|Sport|General","confidence":"High|Medium|Low","content_summary":"<1-2 sentences describing what this text IS ABOUT — its topic and purpose, not the bias findings>","summary":"<2-3 sentences naming specific patterns that drove the score, and noting if text is largely neutral>","pronoun_counts":{"masculine":<n>,"feminine":<n>,"neutral":<n>},"flagged_phrases":[{"phrase":"<exact phrase max 8 words>","type":"pronoun|gendered_language|anthropomorphism|domain_stereotype","explanation":"<one sentence citing which rule applies>","suggestion":"<specific neutral alternative>"}],"overall_suggestions":["<actionable suggestion 1>","<actionable suggestion 2>","<actionable suggestion 3>"]}',
+  "Tier rules: Low=0-30, Moderate=31-50, High=51-70, Severe=71-100.",
+  "Flag max 10 most significant instances. Do not flag same word twice.",
+  "TEXT:",
+  '"""',
+  "<<<TEXT>>>",
+  '"""'
+];
+var PROMPT_TEMPLATE = PROMPT_LINES.join("\n");
+
+/* ── GEMINI CALL ────────────────────────────── */
+function geminiCall(text, modelIdx, resolve, reject) {
+  if (modelIdx >= MODELS.length) {
+    reject({t: "Analysis failed", m: "Tried all " + MODELS.length + " models — none returned a valid response.", h: "Wait 30 seconds and try again. Or run via local server: python3 -m http.server 8080"});
+    return;
+  }
+  var model = MODELS[modelIdx];
+  var prompt = PROMPT_TEMPLATE.replace("<<<TEXT>>>", text.slice(0, 7000));
+  var url = proxyUrl("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + KEY);
+  var body = {contents: [{parts: [{text: prompt}]}], generationConfig: {temperature: 0.1, maxOutputTokens: 2048}};
+  showLoading("Analysing\u2026", "Using " + model);
+  xhrPost(url, body, 30000)
+    .then(function(data) {
+      var reason = data && data.candidates && data.candidates[0] && data.candidates[0].finishReason;
+      if (reason === "SAFETY") { reject({t: "Blocked", m: "Safety filter triggered.", h: "Try different text."}); return; }
+      var raw = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
+      if (!raw) { geminiCall(text, modelIdx + 1, resolve, reject); return; }
+      var clean = raw.trim().replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/, "").trim();
+      var parsed = null;
+      try { parsed = JSON.parse(clean); } catch(e) {
+        var m = clean.match(/\{[\s\S]*\}/);
+        if (m) { try { parsed = JSON.parse(m[0]); } catch(e2) {} }
+      }
+      if (parsed) { resolve(parsed); } else { geminiCall(text, modelIdx + 1, resolve, reject); }
+    })
+    .catch(function(err) {
+      if (err && err.code === 429) { geminiCall(text, modelIdx + 1, resolve, reject); return; }
+      if (err && (err.code === 400 || err.code === 403)) {
+        reject({t: "API key error", m: err.msg || "Invalid key.", h: "Check at aistudio.google.com/apikey"}); return;
+      }
+      if (err && err.code === 0) {
+        reject({t: "Blocked", m: err.msg, h: "Run via local server: python3 -m http.server 8080 then open http://localhost:8080/GenderLens.html"}); return;
+      }
+      geminiCall(text, modelIdx + 1, resolve, reject);
+    });
+}
+
+function analyseText(text) {
+  return new Promise(function(res, rej) { geminiCall(text, 0, res, rej); });
+}
+
+/* ── URL FETCHING ───────────────────────────── */
+function extractText(html) {
+  var tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  var rem = tmp.querySelectorAll("script,style,nav,header,footer,aside,noscript,iframe,button,form,input,select");
+  for (var i = 0; i < rem.length; i++) { if (rem[i].parentNode) rem[i].parentNode.removeChild(rem[i]); }
+  var main = tmp.querySelector("article,[role='main'],main,.article-body,.post-content,.entry-content,.content");
+  var raw = ((main || tmp).innerText || (main || tmp).textContent || "");
+  return raw.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function fetchUrl(url, done) {
+  showLoading("Fetching page\u2026", "Trying Jina AI reader");
+  xhrGet("https://r.jina.ai/" + url, 18000)
+    .then(function(t) {
+      var cleaned = t.replace(/\[.*?\]\(.*?\)/g, "").replace(/#{1,6} /g, "").replace(/\n{3,}/g, "\n\n").trim();
+      if (cleaned.length > 100) { done(null, cleaned.slice(0, 9000)); return; }
+      tryAllOrigins();
+    }).catch(function() { tryAllOrigins(); });
+
+  function tryAllOrigins() {
+    showLoading("Fetching page\u2026", "Trying allorigins proxy");
+    xhrGet("https://api.allorigins.win/get?url=" + encodeURIComponent(url), 14000)
+      .then(function(raw) {
+        var d = JSON.parse(raw);
+        var html = d.contents || "";
+        if (html.length > 200) {
+          var t = extractText(html);
+          if (t.length > 100) { done(null, t.slice(0, 9000)); return; }
+        }
+        tryCodetabs();
+      }).catch(function() { tryCodetabs(); });
+  }
+
+  function tryCodetabs() {
+    showLoading("Fetching page\u2026", "Trying codetabs proxy");
+    xhrGet("https://api.codetabs.com/v1/proxy?quest=" + encodeURIComponent(url), 12000)
+      .then(function(html) {
+        var t = extractText(html);
+        if (t.length > 100) { done(null, t.slice(0, 9000)); return; }
+        done(new Error("Could not extract readable text from that page. Please paste the text directly."));
+      }).catch(function() {
+        done(new Error("Could not fetch that URL. Please paste the text directly using the Paste text tab."));
+      });
+  }
+}
+
+/* ── HELPERS ────────────────────────────────── */
+function H(s) { return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function RE(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+function wordCount(t) { return t.trim().split(/\s+/).filter(Boolean).length; }
+
+function getBestSentences(txt, maxChars) {
+  var parts = txt.split(/\.\s+|\!\s+|\?\s+/);
+  var out = "";
+  for (var i = 0; i < parts.length; i++) {
+    var s = parts[i].trim();
+    if (s.length < 25) continue;
+    if (s.length > 350) continue;
+    var words = s.split(/\s+/).filter(Boolean);
+    if (words.length < 5) continue;
+    if (/^[\|\-\*\#\>]/.test(s)) continue;
+    if (/https?:\/\//.test(s)) continue;
+    if (/[\[\]{}<>]/.test(s)) continue;
+    if (/^\d+$/.test(s.replace(/\s/g, ""))) continue;
+    if (out.length + s.length + 2 > maxChars) break;
+    out += (out ? ". " : "") + s;
+  }
+  return (out || txt.slice(0, maxChars)).trim();
+}
+
+/* ── TYPE INFO ──────────────────────────────── */
+var TI = {
+  pronoun:           {mk: "mp", st: "fp", pi: "fpp", lb: "Pronoun"},
+  gendered_language: {mk: "mg", st: "fg", pi: "fpg", lb: "Gendered language"},
+  anthropomorphism:  {mk: "ma", st: "fa", pi: "fpa", lb: "Anthropomorphism"},
+  domain_stereotype: {mk: "md", st: "fd", pi: "fpd", lb: "Domain stereotype"}
+};
+
+var INSIGHTS = {
+  Technology: {i: "&#128187;", t: "Tech content is among the most biased domains", b: "Research shows STEM articles default to male pronouns even for generic concepts. LLMs trained on this data amplify the bias further. (ACM, 2023)"},
+  Science:    {i: "&#128300;", t: "Science writing has a documented pronoun gap", b: "Studies of science journalism find male pronouns dominate when referring to scientists, reinforcing a male-default assumption in public understanding."},
+  Finance:    {i: "&#128200;", t: "Finance topics consistently underrepresent women", b: "The Gender Gap Tracker found business and finance articles quoted male sources far more often. (PLOS ONE, 2021)"},
+  Politics:   {i: "&#127963;", t: "Political coverage has a persistent male bias", b: "Male politicians receive substantially more coverage and direct quotes, even after controlling for the proportion of female politicians."},
+  Media:      {i: "&#128250;", t: "TV news uses male pronouns heavily", b: "A decade of broadcast data across CNN, MSNBC, Fox and BBC found all four channels biased toward male pronouns. (GDELT Project)"},
+  Sport:      {i: "&#127941;", t: "Sports coverage has an extreme gender gap", b: "Women's sport receives a fraction of coverage, and female athletes are more likely to be described by appearance than performance. (UNESCO)"},
+  Healthcare: {i: "&#127973;", t: "Healthcare language defaults to female caregivers", b: "Nursing and caregiving writing defaults to female pronouns, reinforcing stereotypes — even though 13% of US nurses are male."},
+};
+var DINS = {i: "&#128202;", t: "Men are quoted 3\u00d7 more than women in news", b: "Research covering 7 Canadian news outlets (2018\u20132020) found men are cited roughly three times more often than women, regardless of topic. (Gender Gap Tracker, PLOS ONE, 2021)"};
+var TC = {low: "#15803d", moderate: "#b45309", high: "#c2410c", severe: "#b91c1c"};
+
+/* ── RENDER RESULTS ─────────────────────────── */
+function renderResults(d, text, src, fullUrl) {
+  var sc = (d.tier || "Low").toLowerCase();
+  var col = TC[sc] || "#888";
+
+  var scn = document.getElementById("scn");
+  scn.textContent = d.score || 0;
+  scn.className = "sc-n c" + sc.charAt(0);
+
+  var tb = document.getElementById("tier-badge");
+  tb.textContent = d.tier || "Low";
+  tb.className = "tier t" + sc.charAt(0);
+
+  document.getElementById("dtag").textContent = d.domain || "General";
+  document.getElementById("ctag").textContent = "Confidence: " + (d.confidence || "Medium");
+  document.getElementById("st").textContent = d.summary || "";
+  document.getElementById("r-m").textContent = "Analysed " + (src || "pasted text") + " \u00b7 " + new Date().toLocaleTimeString();
+
+  // URL bar
+  var urlBar = document.getElementById("url-bar");
+  var urlDisp = document.getElementById("url-display");
+  if (fullUrl && urlBar && urlDisp) {
+    urlDisp.textContent = fullUrl;
+    urlDisp.href = fullUrl;
+    urlBar.style.display = "flex";
+  } else {
+    urlBar.style.display = "none";
+  }
+
+  // Content summary
+  var csBar = document.getElementById("content-summary-bar");
+  var csTxt = document.getElementById("content-summary-text");
+  if (csBar && csTxt && d.content_summary) {
+    csTxt.textContent = d.content_summary;
+    csBar.style.display = "block";
+  } else if (csBar) {
+    csBar.style.display = "none";
+  }
+
+  // Pronoun bar
+  var pc = d.pronoun_counts || {masculine: 0, feminine: 0, neutral: 0};
+  var tot = Math.max((pc.masculine || 0) + (pc.feminine || 0) + (pc.neutral || 0), 1);
+  var hp = Math.round((pc.masculine || 0) / tot * 100);
+  var sp = Math.round((pc.feminine || 0) / tot * 100);
+  var tp = 100 - hp - sp;
+  document.getElementById("pbar").innerHTML = '<div class="pbh" style="width:' + hp + '%"></div><div class="pbs" style="width:' + sp + '%"></div><div class="pbt" style="width:' + tp + '%"></div>';
+  document.getElementById("pbl2").textContent = "he:" + (pc.masculine || 0) + "  she:" + (pc.feminine || 0) + "  they:" + (pc.neutral || 0);
+
+  // Text stats
+  var wc = wordCount(text);
+  document.getElementById("txs").innerHTML = '<div><div class="txn">' + wc.toLocaleString() + '</div><div class="txl">words</div></div><div><div class="txn">' + Math.max(1, Math.round(wc / 200)) + '</div><div class="txl">min read</div></div><div><div class="txn">' + ((pc.masculine || 0) + (pc.feminine || 0) + (pc.neutral || 0)) + '</div><div class="txl">gendered pronouns</div></div>';
+
+  // Tiles
+  var cts = {pronoun: 0, gendered_language: 0, anthropomorphism: 0, domain_stereotype: 0};
+  var phrases = d.flagged_phrases || [];
+  for (var i = 0; i < phrases.length; i++) { if (cts[phrases[i].type] !== undefined) cts[phrases[i].type]++; }
+  document.getElementById("np").textContent = cts.pronoun;
+  document.getElementById("ng").textContent = cts.gendered_language;
+  document.getElementById("na").textContent = cts.anthropomorphism;
+  document.getElementById("nd").textContent = cts.domain_stereotype;
+
+  // Insight
+  var ins = INSIGHTS[d.domain] || DINS;
+  document.getElementById("ins-ico").innerHTML = ins.i;
+  document.getElementById("ins-title").textContent = ins.t;
+  document.getElementById("ins-body").textContent = ins.b;
+  document.getElementById("ins").style.display = "flex";
+
+  // Highlighted text (clean sentences only)
+  var dispText = getBestSentences(text, 2600);
+  var hl = H(dispText);
+  var sorted = phrases.slice().sort(function(a, b) { return (b.phrase || "").length - (a.phrase || "").length; });
+  var used = {};
+  for (var i = 0; i < sorted.length; i++) {
+    var item = sorted[i];
+    if (!item.phrase || used[item.phrase]) continue;
+    used[item.phrase] = true;
+    var ti = TI[item.type] || TI.pronoun;
+    var tip = H(item.explanation || "");
+    hl = hl.replace(new RegExp(RE(H(item.phrase)), "gi"), function(m) { return '<mark class="' + ti.mk + '" title="' + tip + '">' + m + "</mark>"; });
+  }
+  document.getElementById("hlbox").innerHTML = hl;
+
+  // Flagged phrases
+  var fl = document.getElementById("flags");
+  if (!phrases.length) {
+    fl.innerHTML = '<div style="background:var(--w);border:1px solid var(--border);border-radius:10px;padding:2rem;text-align:center;box-shadow:var(--sh)"><div style="font-size:28px;margin-bottom:8px">&#10003;</div><div style="font-family:var(--serif);font-size:17px;color:var(--ink);margin-bottom:4px">No specific phrases flagged</div><div style="font-size:13px;color:var(--ink3)">The text uses relatively neutral language.</div></div>';
+  } else {
+    var html = "";
+    for (var i = 0; i < phrases.length; i++) {
+      var item = phrases[i];
+      var ti = TI[item.type] || TI.pronoun;
+      html += '<div class="flag"><div class="fst ' + ti.st + '"></div><div><div class="ftop"><span class="fphr">&ldquo;' + H(item.phrase) + '&rdquo;</span><span class="ftp ' + ti.pi + '">' + ti.lb + '</span></div><p class="fex">' + H(item.explanation) + '</p><div class="fsg">' + H(item.suggestion) + '</div></div></div>';
+    }
+    fl.innerHTML = html;
+  }
+
+  // Suggestions
+  var sb = document.getElementById("sugs");
+  var sugs = d.overall_suggestions || [];
+  if (!sugs.length) {
+    sb.innerHTML = '<div class="sugr"><span>No additional suggestions.</span></div>';
+  } else {
+    var html = "";
+    for (var i = 0; i < sugs.length; i++) {
+      html += '<div class="sugr"><span class="sugn">' + (i + 1) + '</span><span>' + H(sugs[i]) + '</span></div>';
+    }
+    sb.innerHTML = html;
+  }
+
+  // Save history and show
+  saveHist(d, text, src, fullUrl);
+  document.getElementById("res").style.display = "block";
+  document.getElementById("res").scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+/* ── HISTORY ────────────────────────────────── */
+function saveHist(d, text, src, fullUrl) {
+  var item = {score: d.score, tier: d.tier, domain: d.domain, src: src || "Pasted text", fullUrl: fullUrl || null, data: d, text: text, t: Date.now()};
+  var h = getHist();
+  h.unshift(item);
+  if (h.length > 5) h = h.slice(0, 5);
+  try { localStorage.setItem("gl_v2", JSON.stringify(h)); } catch(e) {}
   renderHist();
 }
-function getHist(){try{return JSON.parse(localStorage.getItem("gl")||"[]");}catch(e){return [];}}
-function clearHist(){try{localStorage.removeItem("gl");}catch(e){}renderHist();}
-function renderHist(){
-  var h=getHist();
-  var sect=document.getElementById("hist"); var list=document.getElementById("hl2");
-  if(!h.length){sect.classList.remove("show");return;}
+function getHist() { try { return JSON.parse(localStorage.getItem("gl_v2") || "[]"); } catch(e) { return []; } }
+function clearHist() { try { localStorage.removeItem("gl_v2"); } catch(e) {} renderHist(); }
+function renderHist() {
+  var h = getHist();
+  var sect = document.getElementById("hist");
+  var list = document.getElementById("hl2");
+  if (!h.length) { sect.classList.remove("show"); return; }
   sect.classList.add("show");
-  var tp={Low:"tl",Moderate:"tm",High:"th2",Severe:"ts"};
-  var html="";
-  for(var i=0;i<h.length;i++){
-    var item=h[i]; var sc=(item.tier||"Low").toLowerCase(); var ts=new Date(item.t).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
-    html+='<div class="hi" onclick="loadHist('+i+')"><div class="hisc" style="color:'+(TC[sc]||"#888")+'">'+item.score+'</div><div class="hii"><div class="hisr">'+H(item.src)+'</div><div class="him">'+H(item.domain||"General")+" · "+ts+'</div></div><span class="tier '+(tp[item.tier]||"tl")+'">'+H(item.tier)+'</span></div>';
+  var tp = {Low: "tl", Moderate: "tm", High: "th2", Severe: "ts"};
+  var html = "";
+  for (var i = 0; i < h.length; i++) {
+    var item = h[i];
+    var sc = (item.tier || "Low").toLowerCase();
+    var ts = new Date(item.t).toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+    html += '<div class="hi" onclick="loadHist(' + i + ')"><div class="hisc" style="color:' + (TC[sc] || "#888") + '">' + item.score + '</div><div class="hii"><div class="hisr">' + H(item.src) + '</div><div class="him">' + H(item.domain || "General") + " \u00b7 " + ts + '</div></div><span class="tier ' + (tp[item.tier] || "tl") + '">' + H(item.tier) + '</span></div>';
   }
-  list.innerHTML=html;
+  list.innerHTML = html;
 }
-function loadHist(i){
-  var h=getHist(); var item=h[i]; if(!item)return;
-  document.getElementById("input-card").style.display="none";
-  document.querySelector(".chips").style.display="none";
-  document.getElementById("res").style.display="none";
-  renderResults(item.data,item.text,item.src!=="Pasted text"?item.src:null);
+function loadHist(i) {
+  var h = getHist();
+  var item = h[i];
+  if (!item) return;
+  showInputs();
+  document.getElementById("input-card").style.display = "none";
+  document.getElementById("chips-row").style.display = "none";
+  document.getElementById("res").style.display = "none";
+  renderResults(item.data, item.text, item.src, item.fullUrl);
 }
 
-// ── COPY REPORT ──────────────────────────────────────────────────────────────
-function copyReport(){
-  var score=document.getElementById("scn").textContent;
-  var tier=document.getElementById("tier").textContent;
-  var domain=document.getElementById("dtag").textContent;
-  var summary=document.getElementById("st").textContent;
-  var flagEls=document.querySelectorAll(".flag"); var flagText="";
-  for(var i=0;i<flagEls.length;i++){
-    var p=(flagEls[i].querySelector(".fphr")||{}).textContent||"";
-    var e=(flagEls[i].querySelector(".fex")||{}).textContent||"";
-    var s=(flagEls[i].querySelector(".fsg")||{}).textContent||"";
-    flagText+="\n• "+p+"\n  "+e+"\n  → "+s;
+/* ── COPY REPORT ────────────────────────────── */
+function copyReport() {
+  var score = document.getElementById("scn").textContent;
+  var tier = document.getElementById("tier-badge").textContent;
+  var domain = document.getElementById("dtag").textContent;
+  var summary = document.getElementById("st").textContent;
+  var urlEl = document.getElementById("url-display");
+  var sourceUrl = urlEl && urlEl.textContent ? "Source: " + urlEl.textContent + "\n" : "";
+  var flagEls = document.querySelectorAll(".flag");
+  var flagText = "";
+  for (var i = 0; i < flagEls.length; i++) {
+    var p = (flagEls[i].querySelector(".fphr") || {}).textContent || "";
+    var e = (flagEls[i].querySelector(".fex") || {}).textContent || "";
+    var s = (flagEls[i].querySelector(".fsg") || {}).textContent || "";
+    flagText += "\n\u2022 " + p + "\n  " + e + "\n  \u2192 " + s;
   }
-  var sugEls=document.querySelectorAll(".sugr"); var sugText="";
-  for(var i=0;i<sugEls.length;i++){var sp=sugEls[i].querySelectorAll("span");if(sp.length>1)sugText+="\n"+(i+1)+". "+sp[1].textContent;}
-  var rep=["=== GENDERLENS BIAS ANALYSIS REPORT ===","Score: "+score+"/100 ("+tier+") | Domain: "+domain,"Generated: "+new Date().toLocaleString(),"","SUMMARY",summary,"","FLAGGED PHRASES",flagText||"None.","","RECOMMENDATIONS",sugText||"None.","","---","Generated by GenderLens"].join("\n");
-  try{navigator.clipboard.writeText(rep).then(function(){var b=document.getElementById("copy-btn");b.textContent="✓ Copied!";setTimeout(function(){b.textContent="📋 Copy report";},2000);});}
-  catch(e){var ta=document.createElement("textarea");ta.value=rep;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);var b=document.getElementById("copy-btn");b.textContent="✓ Copied!";setTimeout(function(){b.textContent="📋 Copy report";},2000);}
+  var sugEls = document.querySelectorAll(".sugr");
+  var sugText = "";
+  for (var i = 0; i < sugEls.length; i++) {
+    var spans = sugEls[i].querySelectorAll("span");
+    if (spans.length > 1) sugText += "\n" + (i + 1) + ". " + spans[1].textContent;
+  }
+  var rep = [
+    "=== GENDERLENS BIAS ANALYSIS REPORT ===",
+    "Score: " + score + "/100 (" + tier + ") | Domain: " + domain,
+    sourceUrl + "Generated: " + new Date().toLocaleString(),
+    "", "SUMMARY", summary,
+    "", "FLAGGED PHRASES", flagText || "None flagged.",
+    "", "RECOMMENDATIONS", sugText || "None.",
+    "", "---", "Made by Anvi Karanjkar \u00b7 GenderLens"
+  ].join("\n");
+
+  try {
+    navigator.clipboard.writeText(rep).then(function() {
+      var b = document.getElementById("copy-btn");
+      b.textContent = "\u2713 Copied!";
+      setTimeout(function() { b.textContent = "\uD83D\uDCCB Copy text"; }, 2200);
+    });
+  } catch(e) {
+    var ta = document.createElement("textarea");
+    ta.value = rep; ta.style.cssText = "position:fixed;opacity:0";
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy");
+    document.body.removeChild(ta);
+    var b = document.getElementById("copy-btn");
+    b.textContent = "\u2713 Copied!";
+    setTimeout(function() { b.textContent = "\uD83D\uDCCB Copy text"; }, 2200);
+  }
 }
 
-// ── RESET ────────────────────────────────────────────────────────────────────
-function newAnalysis(){
-  document.getElementById("res").style.display="none";
-  document.getElementById("res").classList.remove("show");
-  showInputs(); hideErr();
-  document.getElementById("text-input").value="";
-  document.getElementById("url-input").value="";
-  updateCount();
-  window.scrollTo({top:0,behavior:"smooth"});
-}
+/* ── PDF EXPORT ─────────────────────────────── */
+function exportPDF() {
+  var btn = document.querySelector(".btn-pdf");
+  if (btn) { btn.textContent = "Generating\u2026"; btn.disabled = true; }
 
-// ── MAIN ─────────────────────────────────────────────────────────────────────
-function runAnalysis(){
-  hideErr();
-  document.getElementById("res").style.display="none";
-  document.getElementById("res").classList.remove("show");
+  // Collect data
+  var score   = document.getElementById("scn").textContent || "0";
+  var tier    = document.getElementById("tier-badge").textContent || "Low";
+  var domain  = document.getElementById("dtag").textContent || "General";
+  var conf    = document.getElementById("ctag").textContent || "";
+  var summary = document.getElementById("st").textContent || "";
+  var pbl     = document.getElementById("pbl2").textContent || "";
 
-  function doRun(){
-    if(currentTab==="text"){
-      var text=document.getElementById("text-input").value.trim();
-      if(!text){showErr("No text","Please paste some text to analyse.","");return;}
-      if(text.length<40){showErr("Too short","Please paste a longer piece of text — at least a few sentences.","");return;}
-      setLoading("Analysing text…","Sending to Google Gemini");
-      analyseText(text).then(function(r){hideLoading();renderResults(r,text,null);}).catch(function(err){hideLoading();showInputs();showErr(err.t||"Error",err.m||String(err),err.h||"");});
-    } else {
-      var url=document.getElementById("url-input").value.trim();
-      if(!url||url.indexOf("http")!==0){showErr("Invalid URL","Please enter a full URL starting with https://","");return;}
-      fetchUrl(url,function(err,text){
-        if(err){hideLoading();showInputs();showErr("Could not fetch URL",err.message||String(err),"Try pasting the text directly using the Paste text tab.");return;}
-        var src=url.replace(/^https?:\/\//,"").split("/")[0];
-        analyseText(text).then(function(r){hideLoading();renderResults(r,text,src);}).catch(function(err){hideLoading();showInputs();showErr(err.t||"Error",err.m||String(err),err.h||"");});
-      });
+  var txsNums = document.querySelectorAll("#txs .txn");
+  var words   = txsNums[0] ? txsNums[0].textContent : "0";
+  var readMin = txsNums[1] ? txsNums[1].textContent : "0";
+  var nPronouns = txsNums[2] ? txsNums[2].textContent : "0";
+
+  var urlEl = document.getElementById("url-display");
+  var sourceUrl = urlEl && urlEl.textContent ? urlEl.textContent : "";
+
+  var csEl = document.getElementById("content-summary-text");
+  var contentSummary = csEl && csEl.textContent ? csEl.textContent : "";
+
+  var insTitle = (document.getElementById("ins-title") || {}).textContent || "";
+  var insBody  = (document.getElementById("ins-body")  || {}).textContent || "";
+
+  var hlbox = document.getElementById("hlbox");
+  var hlText = hlbox ? (hlbox.innerText || hlbox.textContent || "").trim() : "";
+
+  var np = (document.getElementById("np") || {}).textContent || "0";
+  var ng = (document.getElementById("ng") || {}).textContent || "0";
+  var na = (document.getElementById("na") || {}).textContent || "0";
+  var nd = (document.getElementById("nd") || {}).textContent || "0";
+
+  var dateStr = new Date().toLocaleDateString("en-GB", {day:"numeric",month:"long",year:"numeric"});
+  var filename = "GenderLens-" + domain + "-" + score + "-" + new Date().toISOString().slice(0,10) + ".pdf";
+
+  // Collect flagged phrases
+  var flagData = [];
+  document.querySelectorAll(".flag").forEach(function(el) {
+    flagData.push({
+      phrase: (el.querySelector(".fphr") || {}).textContent || "",
+      type:   (el.querySelector(".ftp")  || {}).textContent || "",
+      exp:    (el.querySelector(".fex")  || {}).textContent || "",
+      sug:    (el.querySelector(".fsg")  || {}).textContent || ""
+    });
+  });
+
+  // Collect suggestions
+  var sugData = [];
+  document.querySelectorAll(".sugr").forEach(function(el) {
+    var spans = el.querySelectorAll("span");
+    if (spans.length > 1) sugData.push(spans[1].textContent || "");
+  });
+
+  // ── jsPDF setup ──────────────────────────────────────────────────────────
+  var jsPDF = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+  if (!jsPDF) {
+    if (btn) { btn.textContent = "&#11015; Export PDF"; btn.disabled = false; }
+    alert("PDF library not loaded. Check your internet connection.");
+    return;
+  }
+
+  var doc = new jsPDF({unit:"mm", format:"a4", orientation:"portrait"});
+  var PW = 210; // page width mm
+  var PH = 297; // page height mm
+  var ML = 14;  // margin left
+  var MR = 14;  // margin right
+  var CW = PW - ML - MR; // content width
+  var y  = 0;
+  var pageCount = 1;
+
+  // Color palette
+  var RED    = [184, 56, 32];
+  var INK    = [20, 18, 16];
+  var INK2   = [74, 69, 64];
+  var INK3   = [154, 149, 144];
+  var PAPER  = [245, 241, 234];
+  var PAPER2 = [237, 232, 223];
+  var WHITE  = [255, 255, 255];
+  var BORDER = [220, 216, 210];
+
+  var tierColors = {
+    Low:      {text:[21,128,61],   bg:[220,252,231]},
+    Moderate: {text:[180,83,9],    bg:[254,243,199]},
+    High:     {text:[194,65,12],   bg:[255,237,213]},
+    Severe:   {text:[185,28,28],   bg:[254,226,226]}
+  };
+  var typeColors = {
+    "Pronoun":           {r:26,  g:95,  b:168},
+    "Gendered language": {r:180, g:120, b:16},
+    "Anthropomorphism":  {r:91,  g:63,  b:166},
+    "Domain stereotype": {r:30,  g:107, b:68}
+  };
+  var tm = tierColors[tier] || tierColors.Low;
+
+  function newPage() {
+    doc.addPage();
+    pageCount++;
+    y = 14;
+    // page number footer
+    doc.setFontSize(8);
+    doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+    doc.text("GenderLens \u00b7 " + filename, ML, PH - 7);
+    doc.text("Page " + pageCount, PW - MR, PH - 7, {align:"right"});
+  }
+
+  function checkY(needed) {
+    if (y + needed > PH - 18) { newPage(); }
+  }
+
+  function setFont(style, size, r, g, b) {
+    doc.setFontSize(size || 11);
+    doc.setFont("helvetica", style || "normal");
+    doc.setTextColor(r !== undefined ? r : INK[0], g !== undefined ? g : INK[1], b !== undefined ? b : INK[2]);
+  }
+
+  function wrapText(text, x, startY, maxW, lineH) {
+    var lines = doc.splitTextToSize(String(text || ""), maxW);
+    lines.forEach(function(line) {
+      checkY(lineH);
+      doc.text(line, x, y);
+      y += lineH;
+    });
+    return lines.length;
+  }
+
+  function sectionLabel(label) {
+    checkY(14);
+    y += 4;
+    setFont("bold", 8, INK3[0], INK3[1], INK3[2]);
+    doc.text(label.toUpperCase(), ML, y);
+    y += 3;
+    doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+    doc.setLineWidth(0.3);
+    doc.line(ML, y, ML + CW, y);
+    y += 7;
+  }
+
+  // ── PAGE 1: HEADER ───────────────────────────────────────────────────────
+  // Dark header bar
+  doc.setFillColor(INK[0], INK[1], INK[2]);
+  doc.rect(0, 0, PW, 26, "F");
+
+  // Red logo circle
+  doc.setFillColor(RED[0], RED[1], RED[2]);
+  doc.circle(ML + 7, 13, 5, "F");
+  doc.setDrawColor(255, 255, 255);
+  doc.setLineWidth(0.8);
+  doc.circle(ML + 7, 13, 2.8);
+  doc.line(ML + 7, 10.2, ML + 7, 15.8);
+
+  // Logo text
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text("GenderLens", ML + 17, 12.5);
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(180, 175, 170);
+  doc.text("Gender Bias Analysis Report", ML + 17, 18);
+
+  // Date top right
+  doc.setFontSize(8);
+  doc.setTextColor(140, 135, 130);
+  doc.text(dateStr, PW - MR, 13, {align:"right"});
+  if (sourceUrl) {
+    var shortUrl = sourceUrl.length > 50 ? sourceUrl.slice(0, 48) + "\u2026" : sourceUrl;
+    doc.setFontSize(7);
+    doc.setTextColor(120, 115, 110);
+    doc.text(shortUrl, PW - MR, 19, {align:"right"});
+  }
+
+  // Page 1 footer
+  doc.setFontSize(8);
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text("GenderLens \u00b7 " + filename, ML, PH - 7);
+  doc.text("Page 1", PW - MR, PH - 7, {align:"right"});
+
+  y = 34;
+
+  // ── CONTENT SUMMARY ──────────────────────────────────────────────────────
+  if (contentSummary) {
+    checkY(20);
+    doc.setFillColor(PAPER[0], PAPER[1], PAPER[2]);
+    var csLines = doc.splitTextToSize(contentSummary, CW - 12);
+    var csH = csLines.length * 5.2 + 14;
+    doc.roundedRect(ML, y, CW, csH, 2, 2, "F");
+    setFont("bold", 7.5, INK3[0], INK3[1], INK3[2]);
+    doc.text("ABOUT THIS TEXT", ML + 6, y + 7);
+    setFont("normal", 10, INK2[0], INK2[1], INK2[2]);
+    var csStartY = y + 12;
+    csLines.forEach(function(line) {
+      doc.text(line, ML + 6, csStartY);
+      csStartY += 5.2;
+    });
+    y += csH + 6;
+  }
+
+  // ── SCORE ROW ─────────────────────────────────────────────────────────────
+  checkY(52);
+  var scoreBoxW = 42;
+  var scoreBoxH = 48;
+
+  // Score card
+  doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+  doc.setLineWidth(0.4);
+  doc.setFillColor(WHITE[0], WHITE[1], WHITE[2]);
+  doc.roundedRect(ML, y, scoreBoxW, scoreBoxH, 2, 2, "FD");
+
+  // Big score number
+  doc.setFontSize(36);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(tm.text[0], tm.text[1], tm.text[2]);
+  doc.text(String(score), ML + scoreBoxW / 2, y + 22, {align:"center"});
+
+  // "out of 100"
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text("out of 100", ML + scoreBoxW / 2, y + 29, {align:"center"});
+
+  // Tier pill
+  var pillW = 28; var pillH = 6; var pillX = ML + (scoreBoxW - pillW) / 2; var pillY = y + 33;
+  doc.setFillColor(tm.bg[0], tm.bg[1], tm.bg[2]);
+  doc.roundedRect(pillX, pillY, pillW, pillH, 2, 2, "F");
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(tm.text[0], tm.text[1], tm.text[2]);
+  doc.text(tier.toUpperCase(), ML + scoreBoxW / 2, pillY + 4.2, {align:"center"});
+
+  // Summary column
+  var sumX = ML + scoreBoxW + 6;
+  var sumW = CW - scoreBoxW - 6;
+  var sumY = y;
+
+  // Domain + confidence badges
+  doc.setFillColor(PAPER2[0], PAPER2[1], PAPER2[2]);
+  doc.roundedRect(sumX, sumY, 28, 6, 1.5, 1.5, "F");
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(INK2[0], INK2[1], INK2[2]);
+  doc.text(domain.toUpperCase(), sumX + 14, sumY + 4.2, {align:"center"});
+
+  var confShort = conf.replace("Confidence: ", "");
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text(confShort, sumX + 33, sumY + 4.2);
+
+  sumY += 10;
+
+  // Summary text
+  var summaryLines = doc.splitTextToSize(summary, sumW);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(INK2[0], INK2[1], INK2[2]);
+  summaryLines.forEach(function(line) {
+    if (sumY < y + scoreBoxH - 2) {
+      doc.text(line, sumX, sumY);
+      sumY += 5;
     }
+  });
+
+  // Stats row at bottom of summary
+  sumY = y + scoreBoxH - 8;
+  doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+  doc.setLineWidth(0.2);
+  doc.line(sumX, sumY - 2, sumX + sumW, sumY - 2);
+  var statsData = [{n:words,l:"words"},{n:readMin,l:"min read"},{n:nPronouns,l:"pronouns"}];
+  var statColW = sumW / 3;
+  statsData.forEach(function(s, i) {
+    var sx = sumX + i * statColW;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(INK[0], INK[1], INK[2]);
+    doc.text(s.n, sx, sumY + 4);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+    doc.text(s.l.toUpperCase(), sx, sumY + 8.5);
+  });
+
+  // Pronoun ratio
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text("Pronoun ratio: " + pbl, sumX, y + scoreBoxH - 14);
+
+  y += scoreBoxH + 8;
+
+  // ── BREAKDOWN TILES ───────────────────────────────────────────────────────
+  checkY(22);
+  var tileLabels = ["Pronoun bias", "Gendered lang.", "Anthropomorph.", "Domain stereo."];
+  var tileCounts = [np, ng, na, nd];
+  var tileAccents = [[26,95,168],[180,120,16],[91,63,166],[30,107,68]];
+  var tileW = (CW - 9) / 4;
+  tileLabels.forEach(function(lbl, i) {
+    var tx = ML + i * (tileW + 3);
+    doc.setFillColor(WHITE[0], WHITE[1], WHITE[2]);
+    doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(tx, y, tileW, 18, 1.5, 1.5, "FD");
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(INK[0], INK[1], INK[2]);
+    doc.text(tileCounts[i], tx + tileW / 2, y + 10, {align:"center"});
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+    doc.text(lbl.toUpperCase(), tx + tileW / 2, y + 15, {align:"center"});
+    var count = parseInt(tileCounts[i]) || 0;
+    var accent = tileAccents[i];
+    doc.setFillColor(accent[0], accent[1], accent[2]);
+    doc.setGState(new doc.GState({opacity: count > 0 ? 0.6 : 0.1}));
+    doc.roundedRect(tx + 2, y + 16.2, (tileW - 4) * Math.min(count / 5, 1), 1.2, 0.6, 0.6, "F");
+    doc.setGState(new doc.GState({opacity: 1}));
+  });
+  y += 26;
+
+  // ── INSIGHT BOX ───────────────────────────────────────────────────────────
+  if (insTitle) {
+    checkY(22);
+    var insLines = doc.splitTextToSize(insBody, CW - 12);
+    var insH = insLines.length * 4.6 + 16;
+    doc.setFillColor(INK[0], INK[1], INK[2]);
+    doc.roundedRect(ML, y, CW, insH, 2, 2, "F");
+    doc.setFontSize(9.5);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(255, 255, 255);
+    doc.text(insTitle, ML + 6, y + 8);
+    doc.setFontSize(8.5);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(180, 175, 170);
+    var iY = y + 14;
+    insLines.forEach(function(line) {
+      doc.text(line, ML + 6, iY);
+      iY += 4.6;
+    });
+    y += insH + 8;
   }
 
-  if(!MODELS.length){
-    setLoading("Connecting…","Discovering available Gemini models");
-    discoverModels(function(){hideLoading();showInputs();doRun();});
+  // ── FLAGGED PHRASES ───────────────────────────────────────────────────────
+  sectionLabel("Flagged phrases (" + flagData.length + ")");
+
+  if (!flagData.length) {
+    checkY(12);
+    setFont("normal", 10, INK3[0], INK3[1], INK3[2]);
+    doc.text("No specific phrases flagged — text uses relatively neutral language.", ML, y);
+    y += 8;
+  } else {
+    flagData.forEach(function(f, idx) {
+      var tc = typeColors[f.type] || {r:140,g:140,b:140};
+      var expLines = doc.splitTextToSize(f.exp, CW - 14);
+      var sugLines = doc.splitTextToSize("\u2192 " + f.sug, CW - 14);
+      var blockH = 7 + expLines.length * 4.6 + sugLines.length * 4.6 + 8;
+      checkY(blockH);
+
+      // Background
+      doc.setFillColor(248, 247, 245);
+      doc.roundedRect(ML, y, CW, blockH, 1.5, 1.5, "F");
+
+      // Colored left stripe
+      doc.setFillColor(tc.r, tc.g, tc.b);
+      doc.roundedRect(ML, y, 2.5, blockH, 1, 1, "F");
+
+      // Phrase
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "bolditalic");
+      doc.setTextColor(INK[0], INK[1], INK[2]);
+      var phraseLines = doc.splitTextToSize("\u201c" + f.phrase + "\u201d", CW - 60);
+      var phraseY = y + 6;
+      phraseLines.forEach(function(pl) { doc.text(pl, ML + 8, phraseY); phraseY += 5; });
+
+      // Type pill (top right)
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(tc.r, tc.g, tc.b);
+      var pillLabel = f.type.toUpperCase();
+      var pillLabelW = doc.getTextWidth(pillLabel) + 6;
+      doc.setFillColor(tc.r, tc.g, tc.b);
+      doc.setGState(new doc.GState({opacity:0.12}));
+      doc.roundedRect(ML + CW - pillLabelW - 2, y + 3, pillLabelW, 5, 1.5, 1.5, "F");
+      doc.setGState(new doc.GState({opacity:1}));
+      doc.text(pillLabel, ML + CW - pillLabelW + 1, y + 7);
+
+      var textY = y + 5 + phraseLines.length * 5 + 1;
+
+      // Explanation
+      doc.setFontSize(9.5);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(INK2[0], INK2[1], INK2[2]);
+      expLines.forEach(function(line) { doc.text(line, ML + 8, textY); textY += 4.6; });
+
+      // Suggestion
+      textY += 1;
+      doc.setFontSize(9);
+      doc.setFont("helvetica", "italic");
+      doc.setTextColor(30, 107, 68);
+      sugLines.forEach(function(line) { doc.text(line, ML + 8, textY); textY += 4.6; });
+
+      y += blockH + 4;
+    });
+  }
+
+  // ── RECOMMENDATIONS ───────────────────────────────────────────────────────
+  sectionLabel("Recommendations");
+  if (!sugData.length) {
+    checkY(10);
+    setFont("normal", 10, INK3[0], INK3[1], INK3[2]);
+    doc.text("No additional recommendations.", ML, y);
+    y += 8;
+  } else {
+    sugData.forEach(function(s, i) {
+      var sugLines = doc.splitTextToSize(s, CW - 20);
+      var sugH = sugLines.length * 5 + 6;
+      checkY(sugH + 4);
+      // Number
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(220, 216, 210);
+      doc.text(String(i + 1), ML, y + sugH / 2 + 2);
+      // Text
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(INK2[0], INK2[1], INK2[2]);
+      var sy = y + 4;
+      sugLines.forEach(function(line) { doc.text(line, ML + 9, sy); sy += 5; });
+      // Divider
+      if (i < sugData.length - 1) {
+        doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+        doc.setLineWidth(0.2);
+        doc.line(ML + 9, y + sugH + 2, ML + CW, y + sugH + 2);
+      }
+      y += sugH + 6;
+    });
+  }
+
+  // ── ANNOTATED TEXT EXCERPT ────────────────────────────────────────────────
+  if (hlText) {
+    sectionLabel("Annotated text excerpt");
+    var excerpt = hlText.slice(0, 800) + (hlText.length > 800 ? "\u2026" : "");
+    var exLines = doc.splitTextToSize(excerpt, CW - 12);
+    var exH = exLines.length * 4.8 + 10;
+    checkY(Math.min(exH, 60));
+    doc.setFillColor(PAPER[0], PAPER[1], PAPER[2]);
+    doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+    doc.setLineWidth(0.3);
+    var renderH = Math.min(exH, PH - y - 22);
+    doc.roundedRect(ML, y, CW, renderH, 2, 2, "FD");
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(INK2[0], INK2[1], INK2[2]);
+    var ey = y + 6;
+    for (var ei = 0; ei < exLines.length; ei++) {
+      if (ey + 4.8 > y + renderH - 4) break;
+      doc.text(exLines[ei], ML + 6, ey);
+      ey += 4.8;
+    }
+    y += renderH + 8;
+  }
+
+  // ── FOOTER ON LAST PAGE ───────────────────────────────────────────────────
+  checkY(16);
+  doc.setDrawColor(BORDER[0], BORDER[1], BORDER[2]);
+  doc.setLineWidth(0.3);
+  doc.line(ML, y, ML + CW, y);
+  y += 5;
+  doc.setFontSize(8.5);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text("Made by Anvi Karanjkar", ML, y);
+  doc.setTextColor(INK3[0], INK3[1], INK3[2]);
+  doc.text("GenderLens \u00b7 Powered by Google Gemini", ML + CW, y, {align:"right"});
+
+  // ── SAVE ─────────────────────────────────────────────────────────────────
+  doc.save(filename);
+
+  if (btn) { btn.innerHTML = "\u2713 Downloaded!"; btn.disabled = false; }
+  setTimeout(function() { if (btn) btn.innerHTML = "&#11015; Export PDF"; }, 2500);
+}
+function newAnalysis() {
+  document.getElementById("res").style.display = "none";
+  showInputs();
+  hideErr();
+  document.getElementById("text-input").value = "";
+  document.getElementById("url-input").value = "";
+  updateCount();
+  lastAnalysedUrl = null;
+  window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+/* ── MAIN FLOW ──────────────────────────────── */
+function doRun() {
+  if (currentTab === "text") {
+    var text = document.getElementById("text-input").value.trim();
+    if (!text) { showErr("No text", "Please paste some text to analyse.", ""); return; }
+    if (text.length < 40) { showErr("Too short", "Please paste a longer piece of text.", ""); return; }
+    lastAnalysedUrl = null;
+    showLoading("Analysing text\u2026", "Sending to Google Gemini");
+    analyseText(text)
+      .then(function(r) { hideLoading(); renderResults(r, text, null, null); })
+      .catch(function(err) { hideLoading(); showInputs(); showErr(err.t || "Error", err.m || String(err), err.h || ""); });
+  } else {
+    var url = document.getElementById("url-input").value.trim();
+    if (!url || url.indexOf("http") !== 0) { showErr("Invalid URL", "Please enter a full URL starting with https://", ""); return; }
+    lastAnalysedUrl = url;
+    fetchUrl(url, function(err, text) {
+      if (err) { hideLoading(); showInputs(); showErr("Could not fetch URL", err.message || String(err), "Try pasting the text directly."); return; }
+      var src = url.replace(/^https?:\/\//, "").split("/")[0];
+      analyseText(text)
+        .then(function(r) { hideLoading(); renderResults(r, text, src, url); })
+        .catch(function(err) { hideLoading(); showInputs(); showErr(err.t || "Error", err.m || String(err), err.h || ""); });
+    });
+  }
+}
+
+function runAnalysis() {
+  hideErr();
+  document.getElementById("res").style.display = "none";
+  if (!MODELS.length) {
+    showLoading("Connecting\u2026", "Discovering available Gemini models");
+    discoverModels(function() { hideLoading(); showInputs(); doRun(); });
   } else {
     doRun();
   }
 }
 
-// ── KEYBOARD ─────────────────────────────────────────────────────────────────
-document.getElementById("url-input").onkeydown=function(e){if(e.key==="Enter")runAnalysis();};
-document.getElementById("text-input").onkeydown=function(e){if((e.metaKey||e.ctrlKey)&&e.key==="Enter")runAnalysis();};
+/* ── KEYBOARD ───────────────────────────────── */
+document.getElementById("url-input").addEventListener("keydown", function(e) { if (e.key === "Enter") runAnalysis(); });
+document.getElementById("text-input").addEventListener("keydown", function(e) { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runAnalysis(); });
 
-// ── INIT ─────────────────────────────────────────────────────────────────────
+/* ── INIT ───────────────────────────────────── */
 renderHist();
-discoverModels(function(err){
-  if(err) console.warn("Background model discovery failed — will retry on first analysis");
+discoverModels(function(err) {
+  if (err) console.warn("Model discovery failed on load — will retry on first analysis");
 });
 </script>
 </body>
