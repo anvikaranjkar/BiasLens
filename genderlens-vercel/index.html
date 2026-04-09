@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenderLens — AI Gender Bias Detection</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#141210;--ink2:#4a4540;--ink3:#9a9590;
+  --paper:#f5f1ea;--paper2:#ede8df;--w:#fff;
+  --red:#b83820;--red2:#d4422a;
+  --serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--ink);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-dot{width:26px;height:26px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{font-family:var(--serif);font-size:19px;font-weight:600;color:#fff}
+.made-by{font-size:12px;color:rgba(255,255,255,.4)}
+.made-by a{color:rgba(255,255,255,.5);text-decoration:none}
+.made-by a:hover{color:rgba(255,255,255,.85)}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 2rem;position:relative;overflow:hidden}
+main::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 30% 60%,rgba(184,56,32,.07) 0%,transparent 65%),radial-gradient(ellipse 50% 60% at 75% 35%,rgba(26,95,168,.05) 0%,transparent 60%);pointer-events:none}
+.hero{max-width:940px;width:100%;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:700px){.hero{grid-template-columns:1fr;gap:2rem}}
+.hero-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--red)}
+h1{font-family:var(--serif);font-size:clamp(34px,5.5vw,60px);font-weight:600;line-height:1.1;letter-spacing:-1px;margin-bottom:1.25rem}
+h1 em{font-style:italic;font-weight:300;color:var(--red)}
+.hero-sub{font-size:16px;color:var(--ink2);line-height:1.65;margin-bottom:2.5rem;max-width:420px}
+.cards{display:flex;flex-direction:column;gap:16px}
+.card{background:var(--w);border:1px solid rgba(20,18,16,.12);border-radius:12px;padding:1.5rem;text-decoration:none;color:inherit;transition:all .2s;display:block;box-shadow:0 2px 12px rgba(20,18,16,.06)}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(20,18,16,.10);border-color:rgba(20,18,16,.2)}
+.card-eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:.6rem}
+.card h2{font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:.4rem}
+.card p{font-size:13px;color:var(--ink2);line-height:1.55}
+.card-arrow{font-size:18px;margin-top:.75rem;display:block}
+.card-detect .card-eyebrow{color:var(--red)}
+.card-detect{border-top:3px solid var(--red)}
+.card-learn .card-eyebrow{color:#1a5fa8}
+.card-learn{border-top:3px solid #1a5fa8}
+footer{background:var(--ink);color:rgba(255,255,255,.35);text-align:center;padding:1.25rem;font-size:12px;line-height:1.7}
+footer a{color:rgba(255,255,255,.45);text-decoration:none}
+footer a:hover{color:rgba(255,255,255,.8)}
+.stat-row{display:flex;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.stat{text-align:left}
+.stat-n{font-family:var(--serif);font-size:32px;font-weight:600;color:var(--red);line-height:1}
+.stat-l{font-size:11px;color:var(--ink3);margin-top:2px}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="/">
+    <div class="logo-dot">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <circle cx="6" cy="6" r="4.5" stroke="#fff" stroke-width="1.3"/>
+        <line x1="6" y1="1.5" x2="6" y2="10.5" stroke="#fff" stroke-width="1.3"/>
+      </svg>
+    </div>
+    <span class="logo-text">GenderLens</span>
+  </a>
+  <span class="made-by">Made by <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">Anvi Karanjkar</a></span>
+</header>
+<main>
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Two tools. One mission.</div>
+      <h1>Understanding<br>gender bias<br>in <em>language</em></h1>
+      <p class="hero-sub">Language shapes who we think we are, what we think we can do, and who we think belongs where. GenderLens makes that bias visible.</p>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-n">9&times;</div><div class="stat-l">"He" vs "she" in media</div></div>
+        <div class="stat"><div class="stat-n">83%</div><div class="stat-l">Wikipedia is male</div></div>
+        <div class="stat"><div class="stat-n">3&times;</div><div class="stat-l">Men quoted more often</div></div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card card-detect" href="/detect">
+        <div class="card-eyebrow">&#128269; Bias Detector</div>
+        <h2>GenderLens</h2>
+        <p>Paste any text or URL and get a full AI-powered analysis — bias score, highlighted phrases, pronoun ratios, and rewrite suggestions.</p>
+        <span class="card-arrow">&rarr;</span>
+      </a>
+      <a class="card card-learn" href="/learn">
+        <div class="card-eyebrow" style="color:#1a5fa8">&#128218; Learn</div>
+        <h2>The Language of Bias</h2>
+        <p>A complete A&ndash;Z interactive guide: what gender bias is, the four pillars, media statistics, real examples, an 8-question quiz, and a full glossary.</p>
+        <span class="card-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>Made by <strong>Anvi Karanjkar</strong> &middot; <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">LinkedIn</a> &middot; <a href="https://github.com/anvikaranjkar" target="_blank">GitHub</a></p>
+  <p>GenderLens &middot; AI gender bias detection &middot; Powered by Google Gemini</p>
+</footer>
+</body>
+</html>
