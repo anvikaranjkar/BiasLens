@@ -1,0 +1,21 @@
+{
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": null,
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/detect",
+      "destination": "/detect/index.html"
+    },
+    {
+      "source": "/learn",
+      "destination": "/learn/index.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ]
+}
