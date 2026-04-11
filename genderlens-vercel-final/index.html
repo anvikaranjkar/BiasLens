@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenderLens — See the bias hiding in plain sight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0908;--bg2:#141210;--bg3:#1e1b18;
+  --red:#b83820;--red2:#d4422a;--amber:#d4960a;--green:#2a7a4a;--blue:#1a5fa8;
+  --text:#f0ebe0;--text2:#b8b2a5;--text3:#6a6458;
+  --border:rgba(240,235,224,.07);--border2:rgba(240,235,224,.14);
+  --serif:'Fraunces',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+::selection{background:var(--red);color:#fff}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2.5rem;height:62px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,9,8,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-ring{width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--text)}
+.nav-r{display:flex;align-items:center;gap:1.25rem}
+.nav-link{font-size:13px;color:var(--text3);text-decoration:none;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+.nav-gh{font-size:12px;background:var(--border);color:var(--text2);padding:6px 16px;border-radius:20px;text-decoration:none;border:1px solid var(--border2);transition:all .15s;display:flex;align-items:center;gap:6px}
+.nav-gh:hover{color:var(--text)}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;text-align:center}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);animation:float 9s ease-in-out infinite}
+.orb1{width:600px;height:600px;background:rgba(184,56,32,.10);top:-150px;left:-200px}
+.orb2{width:500px;height:500px;background:rgba(26,95,168,.07);bottom:-80px;right:-150px;animation-delay:-4s}
+.orb3{width:350px;height:350px;background:rgba(107,79,166,.06);top:50%;left:55%;animation-delay:-7s}
+@keyframes float{0%,100%{transform:translate(0,0)}40%{transform:translate(25px,-18px)}70%{transform:translate(-15px,12px)}}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(240,235,224,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(240,235,224,.022) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;justify-content:center;opacity:0;animation:fup .6s ease .2s forwards}
+.eyebrow::before,.eyebrow::after{content:'';width:22px;height:1px;background:var(--red)}
+.hero h1{font-family:var(--serif);font-size:clamp(44px,8vw,90px);font-weight:900;line-height:1.02;letter-spacing:-2.5px;margin-bottom:1.5rem;opacity:0;animation:fup .7s ease .35s forwards}
+.red-italic{color:var(--red);font-style:italic;font-weight:300}
+.dim{color:var(--text2)}
+.tw-wrap{display:inline-block}
+.tw-cursor{display:inline-block;width:3px;background:var(--red);animation:blink .7s steps(1) infinite;margin-left:2px;vertical-align:-.1em;height:.82em}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hero-sub{font-size:18px;color:var(--text2);line-height:1.7;max-width:550px;margin:0 auto 2.5rem;opacity:0;animation:fup .7s ease .5s forwards}
+/* LIVE DEMO BAR */
+.demo-bar{display:flex;align-items:stretch;background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0 auto 2.5rem;max-width:640px;opacity:0;animation:fup .6s ease .65s forwards}
+.demo-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.85rem 1rem;border-right:1px solid var(--border);display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+.demo-txt{padding:.85rem 1.25rem;font-size:14px;color:var(--text2);flex:1;font-style:italic;min-width:0;transition:opacity .3s}
+.bias-hl{background:rgba(184,56,32,.18);border-bottom:1.5px solid var(--red);border-radius:2px;color:var(--text);cursor:default}
+.demo-sc{padding:.85rem 1rem;background:var(--bg3);border-left:1px solid var(--border);font-family:var(--serif);font-size:18px;font-weight:700;color:var(--red);flex-shrink:0;display:flex;align-items:center}
+/* PATHS */
+.choose-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-bottom:1.25rem;opacity:0;animation:fup .5s ease .8s forwards}
+.paths{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fup .6s ease .9s forwards}
+.pcard{width:272px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:2rem 1.75rem;text-decoration:none;color:inherit;transition:transform .25s,border-color .25s,box-shadow .25s;text-align:left;position:relative;overflow:hidden}
+.pcard::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;pointer-events:none}
+.pcard:hover{transform:translateY(-6px);border-color:var(--border2);box-shadow:0 24px 56px rgba(0,0,0,.45)}
+.pcard:hover::before{opacity:1}
+.pd::before{background:radial-gradient(ellipse at top left,rgba(184,56,32,.13),transparent 68%)}
+.pl::before{background:radial-gradient(ellipse at top left,rgba(26,95,168,.10),transparent 68%)}
+.ps::before{background:radial-gradient(ellipse at top left,rgba(42,122,74,.10),transparent 68%)}
+.pcard-ico{font-size:30px;margin-bottom:.85rem;display:block}
+.pcard-bar{height:2px;border-radius:1px;width:28px;margin-bottom:.7rem}
+.pcard h3{font-family:var(--serif);font-size:21px;font-weight:700;margin-bottom:.4rem;line-height:1.2}
+.pcard p{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1.1rem}
+.pcard-arrow{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;transition:gap .18s}
+.pcard:hover .pcard-arrow{gap:9px}
+/* TICKER */
+.ticker-bar{background:var(--red);overflow:hidden;height:38px;position:relative}
+.ticker-bar::before,.ticker-bar::after{content:'';position:absolute;top:0;width:80px;height:100%;z-index:2;pointer-events:none}
+.ticker-bar::before{left:0;background:linear-gradient(to right,var(--red),transparent)}
+.ticker-bar::after{right:0;background:linear-gradient(to left,var(--red),transparent)}
+.ticker-inner{display:flex;align-items:center;height:38px;white-space:nowrap;animation:scroll 46s linear infinite}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.tick-it{font-size:12px;color:#fff;padding:0 40px;display:flex;align-items:center;gap:10px}
+.tick-it strong{font-weight:700}
+.tick-dot{width:4px;height:4px;background:rgba(255,255,255,.35);border-radius:50%}
+/* WHAT SECTION */
+.section{padding:5rem 2.5rem}
+.sec-inner{max-width:1060px;margin:0 auto}
+.sec-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:.85rem}
+.sec-h{font-family:var(--serif);font-size:clamp(28px,4.5vw,50px);font-weight:700;line-height:1.12;letter-spacing:-.5px;margin-bottom:.85rem}
+.sec-sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:540px;margin-bottom:2.5rem}
+.bg2{background:var(--bg2)}
+/* EXPLAINER */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.exp{background:var(--bg3);padding:1.75rem;position:relative;overflow:hidden;transition:background .2s}
+.exp:hover{background:#232018}
+.exp-ghost{font-family:var(--serif);font-size:72px;font-weight:900;color:rgba(240,235,224,.035);position:absolute;top:-6px;right:14px;line-height:1;pointer-events:none}
+.exp-stripe{width:32px;height:2px;border-radius:1px;margin-bottom:.85rem}
+.exp h3{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:.4rem}
+.exp p{font-size:13px;color:var(--text2);line-height:1.65}
+.exp-eg{font-size:12px;font-style:italic;color:var(--text3);margin-top:.6rem;padding:.5rem .8rem;background:rgba(240,235,224,.04);border-radius:4px}
+.exp-eg strong{color:var(--red)}
+/* FLIP CARDS */
+.flip-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:2rem}
+.fc{height:176px;perspective:1000px;cursor:pointer}
+.fc-in{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .52s cubic-bezier(.4,0,.2,1)}
+.fc:hover .fc-in,.fc.flip .fc-in{transform:rotateY(180deg)}
+.fc-f,.fc-b{position:absolute;inset:0;border-radius:10px;padding:1.1rem;backface-visibility:hidden;display:flex;flex-direction:column}
+.fc-f{background:var(--bg3);border:1px solid var(--border)}
+.fc-b{background:var(--bg2);border:1px solid var(--border2);transform:rotateY(180deg)}
+.fc-tag{font-size:9px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:.4rem}
+.fc-txt{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--text);line-height:1.4;flex:1}
+.fc-hint{font-size:10px;color:var(--text3);margin-top:auto}
+.fc-fix-lbl{font-size:9px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;color:var(--green);margin-bottom:.35rem}
+.fc-fix{font-size:13px;color:var(--text);line-height:1.48;flex:1}
+.fc-why{font-size:11px;color:var(--text2);line-height:1.5;margin-top:auto}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:2rem}
+.sbox{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.4rem;text-align:center;transition:transform .2s}
+.sbox:hover{transform:translateY(-4px)}
+.sn{font-family:var(--serif);font-size:42px;font-weight:900;color:var(--red);line-height:1;margin-bottom:5px}
+.sl{font-size:12px;color:var(--text2);line-height:1.45;margin-bottom:3px}
+.ss{font-size:10px;color:var(--text3)}
+/* SITEMAP */
+.smap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:2rem}
+.sm{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.6rem;text-decoration:none;color:inherit;transition:all .2s;display:block}
+.sm:hover{transform:translateY(-4px);border-color:var(--border2);box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.sm-url{font-family:monospace;font-size:10px;color:var(--text3);margin-bottom:.65rem;display:block}
+.sm-ico{font-size:26px;margin-bottom:.65rem;display:block}
+.sm h3{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:.35rem}
+.sm p{font-size:13px;color:var(--text2);line-height:1.55}
+.sm-feats{margin-top:.85rem;display:flex;flex-direction:column;gap:4px}
+.sm-feat{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+.sm-feat::before{content:'92';color:var(--red);font-size:10px}
+/* SETUP */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:2rem;max-width:780px}
+.step{display:grid;grid-template-columns:56px 1fr;position:relative}
+.step::before{content:'';position:absolute;left:27px;top:48px;bottom:0;width:2px;background:var(--border)}
+.step:last-child::before{display:none}
+.step-nw{display:flex;flex-direction:column;align-items:center;padding-top:2px}
+.step-n{width:38px;height:38px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:700;color:#fff;flex-shrink:0;position:relative;z-index:1}
+.step-b{padding:0 0 2.75rem 1.4rem}
+.step-b h3{font-family:var(--serif);font-size:19px;font-weight:700;margin-bottom:.4rem}
+.step-b p{font-size:14px;color:var(--text2);line-height:1.65;margin-bottom:.65rem}
+code{background:var(--bg3);padding:2px 6px;border-radius:3px;font-family:monospace;font-size:12px}
+.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.75rem 1rem;font-family:monospace;font-size:12px;color:var(--text);margin-top:.5rem;overflow-x:auto;white-space:nowrap}
+.step-btn{display:inline-flex;align-items:center;gap:7px;background:var(--red);color:#fff;padding:9px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;transition:background .15s;margin-top:.4rem}
+.step-btn:hover{background:var(--red2)}
+.step-btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--text2);padding:8px 20px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500;border:1px solid var(--border2);transition:all .15s;margin-top:.4rem;margin-left:8px}
+.step-btn-o:hover{background:var(--border);color:var(--text)}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(42,122,74,.14);border:1px solid rgba(42,122,74,.24);color:#6ee7a0;font-size:11px;padding:3px 10px;border-radius:20px;margin-top:.4rem}
+.badge::before{content:'¹3';font-size:10px}
+.settings-box{margin-top:.85rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.85rem 1.1rem}
+.settings-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem}
+.settings-row{font-size:13px;color:var(--text2);display:flex;gap:.5rem;margin-bottom:3px}
+.settings-key{font-family:monospace;font-size:11px;color:var(--text3);min-width:130px;flex-shrink:0}
+/* CTA */
+.cta{background:var(--red);padding:5rem 2.5rem;text-align:center}
+.cta h2{font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:900;color:#fff;margin-bottom:.85rem;line-height:1.1}
+.cta p{font-size:17px;color:rgba(255,255,255,.75);max-width:460px;margin:0 auto 2.25rem;line-height:1.65}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-w{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--red);padding:13px 30px;border-radius:6px;font-size:15px;font-weight:700;text-decoration:none;transition:transform .15s}
+.cta-w:hover{transform:translateY(-2px)}
+.cta-o{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);color:#fff;padding:12px 30px;border-radius:6px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.28);transition:background .15s}
+.cta-o:hover{background:rgba(255,255,255,.22)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.75rem 2.5rem;text-align:center;font-size:12px;color:var(--text3);line-height:1.9}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--text)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:860px){.exp-grid,.flip-row,.stats-row,.smap-grid{grid-template-columns:1fr}.paths{flex-direction:column;align-items:center}.pcard{width:100%;max-width:400px}}
+@media(max-width:600px){nav,.section,.cta{padding-left:1.25rem;padding-right:1.25rem}.hero{padding-left:1.25rem;padding-right:1.25rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/">
+    <div class="logo-ring"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#fff" stroke-width="1.3"/><line x1="6" y1="1.5" x2="6" y2="10.5" stroke="#fff" stroke-width="1.3"/></svg></div>
+    <span class="logo-text">GenderLens</span>
+  </a>
+  <div class="nav-r">
+    <a class="nav-link" href="#sitemap">About</a>
+    <a class="nav-link" href="#setup">Get started</a>
+    <a class="nav-gh" href="https://github.com/anvikaranjkar/genderlens" target="_blank">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div></div>
+  <div class="hero-grid-bg"></div>
+  <div class="eyebrow">Open source &middot; Free to use &middot; Powered by Gemini AI</div>
+  <h1>Words have<br><span class="red-italic"><span class="tw-wrap"><span id="tw"></span><span class="tw-cursor"></span></span></span><br><span class="dim">&mdash; now you can see it</span></h1>
+  <p class="hero-sub">GenderLens uses AI to detect gender bias in any text or website &mdash; pronoun imbalances, gendered language, anthropomorphism, and domain stereotyping. In seconds.</p>
+  <div class="demo-bar"><span class="demo-lbl">Live example</span><span class="demo-txt" id="demo-txt">"The engineer reviewed <span class="bias-hl" title="Assumes all engineers are male">his</span> code, praised by the <span class="bias-hl" title="Gendered role noun">chairman</span>."</span><span class="demo-sc" id="demo-sc">52</span></div>
+  <div class="choose-lbl">Where do you want to start?</div>
+  <div class="paths">
+    <a class="pcard pd" href="/detect">
+      <span class="pcard-ico">&#128269;</span>
+      <div class="pcard-bar" style="background:var(--red)"></div>
+      <h3>Detect bias</h3>
+      <p>Paste any text or URL for a full AI analysis &mdash; score, highlights, pronoun ratios, and rewrite suggestions.</p>
+      <div class="pcard-arrow" style="color:var(--red)">Analyse now <span>&rarr;</span></div>
+    </a>
+    <a class="pcard pl" href="/learn">
+      <span class="pcard-ico">&#128218;</span>
+      <div class="pcard-bar" style="background:var(--blue)"></div>
+      <h3>Learn about bias</h3>
+      <p>A complete interactive guide &mdash; what it is, the four pillars, media statistics, examples, a quiz, and a full glossary.</p>
+      <div class="pcard-arrow" style="color:var(--blue)">Start learning <span>&rarr;</span></div>
+    </a>
+    <a class="pcard ps" href="#setup">
+      <span class="pcard-ico">&#9881;&#65039;</span>
+      <div class="pcard-bar" style="background:var(--green)"></div>
+      <h3>Set up the tool</h3>
+      <p>Add your own free Google AI API key to run the detector. Five minutes, free forever, no credit card needed.</p>
+      <div class="pcard-arrow" style="color:var(--green)">See the guide <span>&rarr;</span></div>
+    </a>
+  </div>
+</section>
+
+<div class="ticker-bar"><div class="ticker-inner" id="ticker"></div></div>
+
+<section class="section bg2">
+  <div class="sec-inner">
+    <div class="sec-label reveal">What is gender bias in language?</div>
+    <h2 class="sec-h reveal">It's not about intent.<br>It's about patterns.</h2>
+    <p class="sec-sub reveal">Most people who use biased language don't mean to. The bias lives in what we default to, what we assume, and who we leave out &mdash; invisibly, habitually, and at scale.</p>
+    <div class="exp-grid">
+      <div class="exp reveal"><div class="exp-ghost">01</div><div class="exp-stripe" style="background:#1a5fa8"></div><h3>Pronoun asymmetry</h3><p>Using "he" as the default for unknown-gender subjects. Research shows this causes readers to picture male subjects even when the text is meant to be neutral.</p><div class="exp-eg">e.g. "Each student must submit <strong>his</strong> assignment"</div></div>
+      <div class="exp reveal"><div class="exp-ghost">02</div><div class="exp-stripe" style="background:var(--amber)"></div><h3>Gendered language</h3><p>Words that embed a gender assumption &mdash; "chairman", "mankind", "manpower". These treat maleness as the universal default and all have neutral alternatives.</p><div class="exp-eg">e.g. "<strong>Mankind</strong> has always sought&hellip;" &rarr; humanity</div></div>
+      <div class="exp reveal"><div class="exp-ghost">03</div><div class="exp-stripe" style="background:#6b4fa6"></div><h3>Anthropomorphism</h3><p>Giving non-human things a gender without reason &mdash; ships as "she", AI assistants as female for service roles, weapons as "he". Each choice reinforces stereotypes.</p><div class="exp-eg">e.g. "<strong>She</strong> set sail on <strong>her</strong> maiden voyage" &mdash; a ship</div></div>
+      <div class="exp reveal"><div class="exp-ghost">04</div><div class="exp-stripe" style="background:var(--green)"></div><h3>Domain stereotyping</h3><p>Entire fields implicitly assumed to belong to one gender. STEM and finance default to male. Nursing and teaching default to female. Even without explicit pronouns.</p><div class="exp-eg">e.g. "Ask your nurse &mdash; <strong>she'll</strong> explain" (13% of nurses are male)</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Spot it yourself</div>
+    <h2 class="sec-h reveal">Hover to reveal<br>the bias &mdash; and the fix</h2>
+    <div class="flip-row">
+      <div class="fc" onclick="this.classList.toggle('flip')"><div class="fc-in"><div class="fc-f"><div class="fc-tag" style="color:var(--red)">Job listing</div><div class="fc-txt">"We need a self-made man who can put in the man-hours to lead the team."</div><div class="fc-hint">Hover to flip &rarr;</div></div><div class="fc-b"><div class="fc-fix-lbl">&#10003; Neutral version</div><div class="fc-fix">"We need a driven, hardworking leader for our team."</div><div class="fc-why">Three gendered terms: "self-made man", "man-hours". Biased listings get 42% fewer female applicants.</div></div></div></div>
+      <div class="fc" onclick="this.classList.toggle('flip')"><div class="fc-in"><div class="fc-f"><div class="fc-tag" style="color:#6b4fa6">AI / Tech</div><div class="fc-txt">"Our AI assistant &mdash; she learns your preferences and adapts to your needs."</div><div class="fc-hint">Hover to flip &rarr;</div></div><div class="fc-b"><div class="fc-fix-lbl">&#10003; Neutral version</div><div class="fc-fix">"Our AI assistant learns your preferences and adapts to your needs."</div><div class="fc-why">74% of AI assistants are given female voices for service roles. UNESCO flagged this globally in 2019.</div></div></div></div>
+      <div class="fc" onclick="this.classList.toggle('flip')"><div class="fc-in"><div class="fc-f"><div class="fc-tag" style="color:var(--amber)">Science writing</div><div class="fc-txt">"The great men of science have always pushed the boundaries of mankind's knowledge."</div><div class="fc-hint">Hover to flip &rarr;</div></div><div class="fc-b"><div class="fc-fix-lbl">&#10003; Neutral version</div><div class="fc-fix">"Scientists have always pushed the boundaries of human knowledge."</div><div class="fc-why">"Great men" + "mankind" erases Marie Curie, Ada Lovelace, Rosalind Franklin from history.</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Why it matters</div>
+    <h2 class="sec-h reveal">The numbers behind<br>the problem</h2>
+    <div class="stats-row reveal">
+      <div class="sbox"><div class="sn counter" data-target="9" data-suffix="&times;">0&times;</div><div class="sl">"He" vs "she" in news media &mdash; even for unknown-gender subjects</div><div class="ss">Sex Roles Journal, 2015</div></div>
+      <div class="sbox"><div class="sn counter" data-target="83" data-suffix="%">0%</div><div class="sl">of Wikipedia biographies are about men. Women are just 17%.</div><div class="ss">Wikipedia, 2021</div></div>
+      <div class="sbox"><div class="sn counter" data-target="3" data-suffix="&times;">0&times;</div><div class="sl">Men are quoted more than women in mainstream English-language news</div><div class="ss">Gender Gap Tracker, 2021</div></div>
+      <div class="sbox"><div class="sn counter" data-target="74" data-suffix="%">0%</div><div class="sl">of AI voice assistants given female voices for service roles</div><div class="ss">UNESCO, 2019</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sitemap">
+  <div class="sec-inner">
+    <div class="sec-label reveal">What's in this project</div>
+    <h2 class="sec-h reveal">Three tools.<br>One mission.</h2>
+    <p class="sec-sub reveal">Everything lives in one open-source GitHub repo. Deploy your own instance in minutes with your own API key.</p>
+    <div class="smap-grid">
+      <a class="sm reveal" href="/detect"><span class="sm-url">yoursite.com/detect</span><span class="sm-ico">&#128269;</span><h3>GenderLens Detector</h3><p>The main tool. Paste text or a URL for a full AI-powered bias analysis with score, annotations, and rewrite suggestions.</p><div class="sm-feats"><div class="sm-feat">Calibrated 0&ndash;100 bias score</div><div class="sm-feat">Colour-coded highlighted text</div><div class="sm-feat">Pronoun ratio visualisation</div><div class="sm-feat">PDF export report</div><div class="sm-feat">Scan history</div></div></a>
+      <a class="sm reveal" href="/learn"><span class="sm-url">yoursite.com/learn</span><span class="sm-ico">&#128218;</span><h3>The Language of Bias</h3><p>A complete interactive educational guide. Everything you need to understand gender bias in language &mdash; history, science, examples, and solutions.</p><div class="sm-feats"><div class="sm-feat">Interactive 8-question quiz</div><div class="sm-feat">Flip-card bias examples</div><div class="sm-feat">Scrollable history timeline</div><div class="sm-feat">Animated media statistics</div><div class="sm-feat">Full A&ndash;Z glossary (21 terms)</div></div></a>
+      <a class="sm reveal" href="#setup"><span class="sm-url">yoursite.com</span><span class="sm-ico">&#127968;</span><h3>Landing &amp; Onboarding</h3><p>This page. An interactive entry point explaining the project, demonstrating bias detection, and guiding users to the right tool.</p><div class="sm-feats"><div class="sm-feat">Animated live bias demos</div><div class="sm-feat">Three-path user routing</div><div class="sm-feat">API key setup guide</div><div class="sm-feat">Project stats and context</div><div class="sm-feat">GitHub repo link</div></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section bg2" id="setup">
+  <div class="sec-inner">
+    <div class="sec-label reveal">Get started</div>
+    <h2 class="sec-h reveal">Deploy your own instance<br>in 5 minutes</h2>
+    <p class="sec-sub reveal">The detector uses Google Gemini AI. You'll need your own free API key &mdash; no credit card, no cost for personal use.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-nw"><div class="step-n">1</div></div>
+        <div class="step-b">
+          <h3>Get the code from GitHub</h3>
+          <p>The entire project is open source. Clone it or download the zip from the repo.</p>
+          <a class="step-btn" href="https://github.com/anvikaranjkar/genderlens" target="_blank"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg> View on GitHub</a>
+          <div class="code-block">git clone https://github.com/anvikaranjkar/genderlens.git</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-nw"><div class="step-n">2</div></div>
+        <div class="step-b">
+          <h3>Get your free Google AI Studio key</h3>
+          <p>Go to Google AI Studio and create a free API key. No credit card required. The free tier supports ~15 requests per minute &mdash; plenty for personal use.</p>
+          <a class="step-btn" href="https://aistudio.google.com/apikey" target="_blank">Get free API key &rarr;</a>
+          <div class="badge">Free tier &middot; No credit card &middot; 15 req/min</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-nw"><div class="step-n">3</div></div>
+        <div class="step-b">
+          <h3>Add your key to detect.html</h3>
+          <p>Open <code>detect.html</code> in any text editor. Find this line near the top and replace the placeholder with your key:</p>
+          <div class="code-block">var KEY = "YOUR_API_KEY_HERE";</div>
+          <p style="margin-top:.65rem">Save the file. That's the only code change required.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-nw"><div class="step-n">4</div></div>
+        <div class="step-b">
+          <h3>Push to GitHub &amp; deploy on Vercel</h3>
+          <p>Push the project folder to GitHub, import it on Vercel, and deploy. Leave all build settings blank &mdash; Vercel auto-detects static HTML files.</p>
+          <a class="step-btn" href="https://vercel.com/new" target="_blank">Deploy on Vercel &rarr;</a>
+          <a class="step-btn-o" href="https://github.com/anvikaranjkar/genderlens" target="_blank">Read the README</a>
+          <div class="settings-box">
+            <div class="settings-label">Vercel deploy settings (leave everything else blank)</div>
+            <div class="settings-row"><span class="settings-key">Framework preset</span><span>Other</span></div>
+            <div class="settings-row"><span class="settings-key">Build command</span><span style="color:var(--text3)">leave blank</span></div>
+            <div class="settings-row"><span class="settings-key">Output directory</span><span style="color:var(--text3)">leave blank</span></div>
+            <div class="settings-row"><span class="settings-key">Install command</span><span style="color:var(--text3)">leave blank</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-nw"><div class="step-n" style="background:var(--green)">&checkmark;</div></div>
+        <div class="step-b">
+          <h3>You're live</h3>
+          <p>Your three pages will be available at:</p>
+          <div class="code-block">yoursite.vercel.app &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &larr; This landing page</div>
+          <div class="code-block" style="margin-top:6px">yoursite.vercel.app/detect &larr; GenderLens detector</div>
+          <div class="code-block" style="margin-top:6px">yoursite.vercel.app/learn &nbsp;&larr; The Language of Bias</div>
+          <div class="badge" style="margin-top:.65rem">Your own hosted, shareable bias detection tool</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Ready to see the bias<br>hiding in your words?</h2>
+  <p>No sign-up required. Paste any text or URL and get results in seconds.</p>
+  <div class="cta-btns">
+    <a class="cta-w" href="/detect">Analyse text now &rarr;</a>
+    <a class="cta-o" href="https://github.com/anvikaranjkar/genderlens" target="_blank">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      Star on GitHub
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Made by <strong>Anvi Karanjkar</strong> &middot; <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">LinkedIn</a> &middot; <a href="https://github.com/anvikaranjkar" target="_blank">GitHub</a></p>
+  <p>GenderLens &middot; Open source &middot; Powered by Google Gemini &middot; Free to use</p>
+  <p style="margin-top:5px;font-size:11px">Sources: Gender Gap Tracker (PLOS ONE 2021) &middot; Sex Roles (2015) &middot; UNESCO (2019) &middot; ACM (2023) &middot; Gaucher et al. (2011)</p>
+</footer>
+
+<script>
+var TICKS=[
+  {s:'"He" appears <strong>9×</strong> more than "she" in news media',r:'Sex Roles, 2015'},
+  {s:'<strong>83%</strong> of Wikipedia biographies are about men',r:'Wikipedia, 2021'},
+  {s:'Men are quoted <strong>3× more</strong> than women in news',r:'Gender Gap Tracker'},
+  {s:'<strong>74%</strong> of AI assistants have female voices for service roles',r:'UNESCO, 2019'},
+  {s:'LLMs amplify gender bias <strong>beyond real-world stats</strong>',r:'ACM, 2023'},
+  {s:'<strong>42%</strong> fewer women apply to jobs with masculine-coded language',r:'Gaucher et al., 2011'},
+  {s:'Only <strong>14%</strong> of news orgs set gender representation targets',r:'McKinsey'},
+  {s:'Female Wikipedia articles <strong>2.4× more likely</strong> to be deleted',r:'Wikipedia research'},
+];
+var tk=document.getElementById('ticker');
+var html='';
+[...TICKS,...TICKS].forEach(function(x){
+  html+='<div class="tick-it"><span>'+x.s+'</span><span class="tick-dot"></span><span style="opacity:.55">'+x.r+'</span></div>';
+});
+tk.innerHTML=html;
+
+var words=['hidden bias','blind spots','assumptions','the default','who we exclude'];
+var wi=0,ci=0,del=false,el=document.getElementById('tw');
+function tw(){
+  var w=words[wi];
+  if(!del){el.textContent=w.slice(0,++ci);if(ci===w.length){del=true;setTimeout(tw,1800);return;}}
+  else{el.textContent=w.slice(0,--ci);if(ci===0){del=false;wi=(wi+1)%words.length;setTimeout(tw,280);return;}}
+  setTimeout(tw,del?48:76);
+}
+setTimeout(tw,1000);
+
+var DEMOS=[
+  {t:'"The engineer reviewed <span class=\"bias-hl\" title=\"Assumes all engineers are male\">his</span> code, praised by the <span class=\"bias-hl\" title=\"Gendered role noun\">chairman</span>."',s:'52'},
+  {t:'"<span class=\"bias-hl\" title=\"Ship given female pronouns\">She</span> set sail on <span class=\"bias-hl\" title=\"Repeated female pronoun\">her</span> maiden voyage, every <span class=\"bias-hl\" title=\"Assumes male crew\">man</span> ready."',s:'61'},
+  {t:'"The great <span class=\"bias-hl\" title=\"Erases female scientists\">men of science</span> have always pushed the bounds of <span class=\"bias-hl\" title=\"Generic male word\">mankind\u2019s</span> knowledge."',s:'44'},
+];
+var di=0;
+setInterval(function(){
+  di=(di+1)%DEMOS.length;
+  var d=DEMOS[di];
+  var el=document.getElementById('demo-txt');
+  var sc=document.getElementById('demo-sc');
+  el.style.opacity='0';
+  setTimeout(function(){el.innerHTML=d.t;sc.textContent=d.s;el.style.transition='opacity .35s';el.style.opacity='1';},280);
+},4000);
+
+var counted=false;
+var co=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(!e.isIntersecting||counted)return;
+    counted=true;
+    document.querySelectorAll('.counter').forEach(function(el){
+      var target=parseInt(el.dataset.target);
+      var suffix=el.dataset.suffix||'';
+      var start=Date.now(),dur=1500;
+      (function step(){var p=Math.min((Date.now()-start)/dur,1),ease=1-Math.pow(1-p,3);el.innerHTML=Math.round(ease*target)+suffix;if(p<1)requestAnimationFrame(step);})();
+    });
+  });
+},{threshold:0.4});
+var sr=document.querySelector('.stats-row');
+if(sr)co.observe(sr);
+
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+</script>
+</body>
+</html>
