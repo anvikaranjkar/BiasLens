@@ -547,6 +547,17 @@ footer a:hover { color: var(--text); }
   .types-row { grid-template-columns: 1fr; }
   .nav-links { display: none; }
 }
+
+/* ── LIGHT MODE ── */
+body.light{
+  --bg:#faf8f4;--bg2:#f0ece4;--bg3:#e8e3d8;
+  --text:#141210;--text2:#4a4540;--text3:#8a8278;
+  --border:rgba(20,18,16,.10);--border2:rgba(20,18,16,.18);
+}
+body.light nav{background:rgba(250,248,244,.92)}
+body.light .bias-hl{background:rgba(184,56,32,.12);color:var(--text)}
+.mode-toggle{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;width:44px;height:44px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:all .2s}
+.mode-toggle:hover{transform:scale(1.1)}
 </style>
 </head>
 <body>
@@ -1162,13 +1173,13 @@ footer a:hover { color: var(--text); }
 <section id="cta">
   <h2>Ready to detect bias<br>in your own content?</h2>
   <p>GenderLens uses Google Gemini AI to analyse any text or URL across all four pillars — free, fast, and precise.</p>
-  <a class="cta-btn" href="/detect">Open GenderLens →</a>
+  <a class="cta-btn" href="/detect">Try the detector →</a><p style="font-size:13px;color:rgba(255,255,255,.65);margin-top:1rem;max-width:420px;margin-left:auto;margin-right:auto">&#128161; Check out the detection page to see GenderLens in action before setting it up yourself.</p>
 </section>
 
 <footer>
-  <p>The Language of Bias · A companion to GenderLens</p>
-  <p>Made by <strong>Anvi Karanjkar</strong> · <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">LinkedIn</a> · <a href="https://github.com/anvikaranjkar" target="_blank">GitHub</a></p>
-  <p style="margin-top:8px;font-size:12px">Sources: Gender Gap Tracker (PLOS ONE, 2021) · Sex Roles Journal (2015) · ACM Collective Intelligence (2023) · UNESCO (2019) · GDELT Project · San Diego State University (2024)</p>
+  <p style="color:rgba(255,255,255,.65);margin-bottom:5px">GenderLens &middot; AI gender bias detection &middot; Powered by Google Gemini</p>
+  <p style="margin-bottom:8px">Sources: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245533" target="_blank">Gender Gap Tracker</a> &middot; <a href="https://link.springer.com/article/10.1007/s11199-014-0437-x" target="_blank">Sex Roles Journal</a> &middot; <a href="https://en.wikipedia.org/wiki/Gender_bias_on_Wikipedia" target="_blank">Wikipedia gender bias studies</a></p>
+  <p style="font-size:13px;color:rgba(255,255,255,.55);margin-top:6px">By <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank" style="color:rgba(255,255,255,.75);font-weight:600;text-decoration:none">Anvi Karanjkar</a></p>
 </footer>
 
 <script>
@@ -1445,6 +1456,19 @@ function filterGlossary(val) {
   renderGlossary(val, '');
 }
 renderGlossary('');
+</script>
+<button class="mode-toggle" id="mode-toggle" title="Toggle light/dark mode" onclick="toggleMode()">🌙</button>
+<script>
+function toggleMode(){
+  var b=document.body;
+  var btn=document.getElementById('mode-toggle');
+  b.classList.toggle('light');
+  btn.textContent=b.classList.contains('light')?'🌙':'☀️';
+  try{localStorage.setItem('gl_mode',b.classList.contains('light')?'light':'dark');}catch(e){}
+}
+(function(){
+  try{if(localStorage.getItem('gl_mode')==='light'){document.body.classList.add('light');var b=document.getElementById('mode-toggle');if(b)b.textContent='🌙';}}catch(e){}
+})();
 </script>
 </body>
 </html>
