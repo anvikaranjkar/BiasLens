@@ -297,6 +297,17 @@ footer a:hover{color:rgba(255,255,255,.85)}
   h1,h2,.r-h{break-after:avoid}
   @page{margin:15mm 12mm;size:A4}
 }
+
+/* ── LIGHT MODE ── */
+body.light{
+  --bg:#faf8f4;--bg2:#f0ece4;--bg3:#e8e3d8;
+  --text:#141210;--text2:#4a4540;--text3:#8a8278;
+  --border:rgba(20,18,16,.10);--border2:rgba(20,18,16,.18);
+}
+body.light nav{background:rgba(250,248,244,.92)}
+body.light .bias-hl{background:rgba(184,56,32,.12);color:var(--text)}
+.mode-toggle{position:fixed;bottom:1.5rem;right:1.5rem;z-index:300;width:44px;height:44px;border-radius:50%;background:var(--bg2);border:1px solid var(--border2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:all .2s}
+.mode-toggle:hover{transform:scale(1.1)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -321,7 +332,7 @@ footer a:hover{color:rgba(255,255,255,.85)}
   </a>
   <nav class="nav">
     <a href="/learn">Learn</a>
-    <a href="#about">Research</a>
+    <a href="/" style="font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,.9)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">&#8592; Home</a><a href="#about">Research</a>
     <a href="#types">Bias types</a>
     <div class="status-pill checking" id="status-pill">
       <div class="status-dot pulse" id="status-dot"></div>
@@ -486,7 +497,7 @@ footer a:hover{color:rgba(255,255,255,.85)}
 <footer>
   <p style="color:rgba(255,255,255,.65);margin-bottom:5px">GenderLens &middot; AI gender bias detection &middot; Powered by Google Gemini</p>
   <p style="margin-bottom:8px">Research: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0245533" target="_blank">Gender Gap Tracker</a> &middot; <a href="https://link.springer.com/article/10.1007/s11199-014-0437-x" target="_blank">Sex Roles Journal</a> &middot; <a href="https://en.wikipedia.org/wiki/Gender_bias_on_Wikipedia" target="_blank">Wikipedia gender bias studies</a></p>
-  <p style="font-size:13px;color:rgba(255,255,255,.55)">Made by <strong style="color:rgba(255,255,255,.8)">Anvi Karanjkar</strong> &middot; <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank">LinkedIn</a> &middot; <a href="https://github.com/anvikaranjkar" target="_blank">GitHub</a></p>
+  <p style="font-size:13px;color:rgba(255,255,255,.55);margin-top:6px">By <a href="https://www.linkedin.com/in/anvi-karanjkar" target="_blank" style="color:rgba(255,255,255,.75);font-weight:600;text-decoration:none">Anvi Karanjkar</a></p>
 </footer>
 
 <script>
@@ -1638,6 +1649,19 @@ renderHist();
 discoverModels(function(err) {
   if (err) console.warn("Model discovery failed on load — will retry on first analysis");
 });
+</script>
+<button class="mode-toggle" id="mode-toggle" title="Toggle light/dark mode" onclick="toggleMode()">🌙</button>
+<script>
+function toggleMode(){
+  var b=document.body;
+  var btn=document.getElementById('mode-toggle');
+  b.classList.toggle('light');
+  btn.textContent=b.classList.contains('light')?'🌙':'☀️';
+  try{localStorage.setItem('gl_mode',b.classList.contains('light')?'light':'dark');}catch(e){}
+}
+(function(){
+  try{if(localStorage.getItem('gl_mode')==='light'){document.body.classList.add('light');var b=document.getElementById('mode-toggle');if(b)b.textContent='🌙';}}catch(e){}
+})();
 </script>
 </body>
 </html>
